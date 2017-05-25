@@ -129,5 +129,11 @@ feature to server.xml to enable the automatic creation of a CICS PROGRAM definit
 In all cases, the JSON returned will be the current contents of the file. Pressing refresh in the browser will repeat the GET request,
 causing a record to be written, updated, or deleted accordingly.
 
+## License
+This project is licensed under [Apache License Version 2.0](LICENSE).
 
 
+## Reference
+
+* For further details on the Link to Liberty functionality refer to this
+[developer center article](https://developer.ibm.com/cics/2016/11/14/link-to-liberty-now-available-in-cics-ts-v5-3/)
