@@ -15,7 +15,9 @@ For further examples, see the [cics-java-jcics-samples](https://github.com/cicsd
 of channels and containers when using the LINK command in Java.
 * [`LinkCommareaResource`](src-java/com/ibm/cicsdev/restappext/LinkCommareaResource.java) - contains several methods demonstrating
 the options available for using the LINK command in Java with a commarea.
-* [`LinkToLiberty`](src-java/com/ibm/cicsdev/restappext/LinkToLiberty.java)
+* [`LinkToLiberty`](src-java/com/ibm/cicsdev/restappext/LinkToLiberty.java) - simple POJO to demonstrate how the `CICSProgram` annotation
+can be used to allow non-Java programs to issue an `EXEC CICS LINK` command and execute code in a Liberty JVM server. The `CICSProgram`
+annotation requires CICS Explorer or CICS Build Toolkit V5.3.0.8 or later.
 * [`TemporaryStorageResource`](src-java/com/ibm/cicsdev/restappext/TemporaryStorageResource.java) - several methods used to manipulate TSQs.
 * [`TransientDataResource`](src-java/com/ibm/cicsdev/restappext/TransientDataResource.java)
 * [`VsamKsdsFileResource`](src-java/com/ibm/cicsdev/restappext/VsamKsdsFileResource.java) - demonstrates use of the JCICS API to
@@ -55,7 +57,7 @@ source and class files generated using the JZOS record generator.
 * CICS TS V5.1 or later, due to the usage of the `getString()` methods.
 * Java SE 1.7 or later on the z/OS system
 * Java SE 1.7 or later on the workstation
-* Eclipse with WebSphere Developer Tools and CICS Explorer SDK installed
+* Eclipse with WebSphere Developer Tools and CICS Explorer SDK V5.3.0.8 or later installed
 
 
 ## Configuration
@@ -127,5 +129,11 @@ feature to server.xml to enable the automatic creation of a CICS PROGRAM definit
 In all cases, the JSON returned will be the current contents of the file. Pressing refresh in the browser will repeat the GET request,
 causing a record to be written, updated, or deleted accordingly.
 
+## License
+This project is licensed under [Apache License Version 2.0](LICENSE).
 
 
+## Reference
+
+* For further details on the Link to Liberty functionality refer to this
+[developer center article](https://developer.ibm.com/cics/2016/11/14/link-to-liberty-now-available-in-cics-ts-v5-3/)

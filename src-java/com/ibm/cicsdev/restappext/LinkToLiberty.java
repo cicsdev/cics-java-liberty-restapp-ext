@@ -21,6 +21,12 @@ import com.ibm.cicsdev.restappext.generated.Supplier;
 /**
  * Provides an example of deploying a POJO into Liberty to allow the
  * use of CICS LINK into a Java EE environment.
+ *
+ * Link to Liberty is not supported in environments earlier than
+ * CICS V5.3 with APAR PI63005.
+ *
+ * To successfully compile this source file, you will need to upgrade your
+ * CICS Explorer or CICS Build Toolkit environment to V5.3.0.8 or later.
  */
 public class LinkToLiberty
 {
