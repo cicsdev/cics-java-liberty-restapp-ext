@@ -42,6 +42,7 @@ access a VSAM KSDS file.
 * [`src-cobol/GETPART.cbl`](src-cobol/GETPART.cbl) - receive a part ID in a commarea and return a complete StockPart record.
 * [`src-cobol/GETSUPPL.cbl`](src-cobol/GETSUPPL.cbl) - receive a StockPart record in the commarea and return the relevant Supplier record.
 * [`src-cobol/PROG1.cbl`](src-cobol/PROG1.cbl) - receive no commarea and write a message using COBOL DISPLAY.
+* [`src-cobol/SUPPLINK.cbl`](src-cobol/SUPPLINK.cbl) - run from terminal to invoke GETSUPPI (LinkToLiberty.java) via Link to Liberty.
 
 
 
@@ -86,6 +87,10 @@ The VSAM examples use the sample file `SMPLXMPL`. For a sample CICS FILE definit
 1. Install the `DFHWLP` resource defined in step 2 and ensure it becomes enabled.
 1. [CICS TS V5.3 with APAR PI63005 only] Add the `cicsts:link-1.0` feature to `server.xml`.
 
+### To add sample resources to CICS:
+1. Compile the supplied sample COBOL programs into a load library included in the CICS DFHRPL concatenation.
+1. Run a DFHCSDUP job using the definitions for the sample resources (etc/DFHCSD.txt).
+
 *Note:* in CICS TS V5.1, the file suffix `.jvmprofile` is not used.
 
 
@@ -114,6 +119,8 @@ may be used with this sample.
 ### LINK to Liberty
 * The ability to LINK to a program defined as a POJO in Liberty is available when using CICS TS V5.3 with APAR PI63005. Add the `cicsts:link-1.0`
 feature to server.xml to enable the automatic creation of a CICS PROGRAM definition.
+* Annotations must be enabled in the development environment for the LINKable program (GETSUPPI) to be defined automatically when the application is deployed.
+* At a CICS terminal, start transaction L2LS with (optionally) a numeric Supplier ID as a parameter to the transaction.
 
 ### Temporary storage queues
 * Write an item to a TSQ using the `rest/tsq/write` URI.
