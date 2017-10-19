@@ -1,5 +1,5 @@
        PROCESS NODYNAM,RENT,APOST,CICS,TRUNC(OPT)
-      
+
       *****************************************************************
       * Licensed Materials - Property of IBM
       *
@@ -21,7 +21,7 @@
       * logic, except on the LINK to Liberty call itself.
       *
       *****************************************************************
-      
+
        IDENTIFICATION DIVISION.
        PROGRAM-ID.              SUPPLINK.
        DATE-WRITTEN.            October 2017.
@@ -37,119 +37,123 @@
       *
       *    SUPPLIER copybook
            COPY SUPPLIER REPLACING SUPPLIER BY WS-SUPPLIER.
-      *
-       01  WS-TERMINAL-INPUT    PIC X(80).
-       01  WS-SUPPLIER-NO       PIC 9(8) DISPLAY.
-       01  WS-LIBERTY-CHANNEL   PIC X(16) VALUE 'LIBERTY-CHANNEL'.
-       01  WS-LIBERTY-PROGRAM   PIC X(8)  VALUE 'GETSUPPI'.
-       01  WS-STORAGE.
-           03 WS-RECEIVE-LENGTH             PIC 9(4) COMP.
-           03 FILLER                        PIC 9(4) COMP.
-           03 LINK-RESP                     PIC 9(8) COMP.
-           03 LINK-RESP2                    PIC 9(8) COMP.
-           03 SUPPID-START                  PIC 9(8) COMP.
-           03 SUPPID-END                    PIC 9(8) COMP.
 
-      * Message to display for normal completion.
-      * Display Link to Liberty USERID, Supplier ID and name.
+      *
+      *    Working storage definitions
+       01  WS-STORAGE.
+           03 WS-TERMINAL-INPUT     PIC X(80)         VALUE SPACES.
+           03 WS-RECEIVE-LENGTH     PIC 9(4)  COMP    VALUE ZERO.
+           03 WS-TRANID             PIC X(4)          VALUE SPACES.
+           03 WS-TRANID-LEN         PIC S9(8) COMP-4  VALUE ZERO.
+           03 WS-SUPPLIER-TXT       PIC 9(8)  DISPLAY VALUE ZERO.
+           03 WS-SUPPLIER-LEN       PIC S9(8) COMP-4  VALUE ZERO.
+           03 WS-SUPPLIER-NO        PIC 9(8)  COMP-4  VALUE ZERO.
+           03 LINK-RESP             PIC 9(8)  COMP    VALUE ZERO.
+           03 LINK-RESP2            PIC 9(8)  COMP    VALUE ZERO.
+
+      *    Message to display for normal completion.
+      *    Display Link to Liberty USERID, Supplier ID and name.
        01 RESPONSE-MESSAGE.
           03 FILLER PIC X(13) VALUE 'CICS USERID: '.
-          03 RESP-CICS-USERID PIC X(8) DISPLAY. 
-          03 FILLER PIC X(14) VALUE ' SUPPLIER ID: '. 
-          03 RESP-SUPPLIER-ID PIC 9(8) DISPLAY. 
-          03 FILLER PIC X(16) VALUE ' SUPPLIER NAME: '. 
-          03 RESP-SUPPLIER-NAME PIC X(40). 
+          03 RESP-CICS-USERID PIC X(8) DISPLAY.
+          03 FILLER PIC X(14) VALUE ' SUPPLIER ID: '.
+          03 RESP-SUPPLIER-ID PIC 9(8) DISPLAY.
+          03 FILLER PIC X(16) VALUE ' SUPPLIER NAME: '.
+          03 RESP-SUPPLIER-NAME PIC X(40).
 
-      * Error message to display if Link to Liberty fails.
-      * Include slots for target PROGRAM, RESP and RESP2.
+      *   Error message to display if Link to Liberty fails.
+      *   Include slots for target PROGRAM, RESP and RESP2.
        01 ERROR-MESSAGE.
           03 FILLER PIC X(17) VALUE 'ERROR LINKING TO '.
-          03 ERROR-PROG PIC X(8) DISPLAY. 
-          03 FILLER PIC X(7) VALUE '. RESP:'. 
-          03 ERROR-RESP PIC 9(8) DISPLAY. 
+          03 ERROR-PROG PIC X(8) DISPLAY.
+          03 FILLER PIC X(7) VALUE '. RESP:'.
+          03 ERROR-RESP PIC 9(8) DISPLAY.
           03 FILLER PIC X(7) VALUE ' RESP2:'.
-          03 ERROR-RESP2 PIC 9(8) DISPLAY. 
+          03 ERROR-RESP2 PIC 9(8) DISPLAY.
+
+      *   Names of various CICS constructs
+       77 LIBERTY-CHANNEL PIC X(16) VALUE 'LIBERTY-CHANNEL'.
+       77 LIBERTY-PROGRAM PIC X(8)  VALUE 'GETSUPPI'.
+       77 CONT-STOCK-PART PIC X(16) VALUE 'STOCK-PART'.
+       77 CONT-SUPPLIER   PIC X(16) VALUE 'SUPPLIER'.
+       77 CONT-USERID     PIC X(16) VALUE 'USERID'.
       *
       *
        PROCEDURE DIVISION USING DFHEIBLK.
       *
        MAIN-PROCESSING SECTION.
-      *
+
+      *    Receive data from terminal
            MOVE LENGTH OF WS-TERMINAL-INPUT TO WS-RECEIVE-LENGTH.
-           EXEC CICS RECEIVE INTO(WS-TERMINAL-INPUT) 
+           EXEC CICS RECEIVE INTO(WS-TERMINAL-INPUT)
                      LENGTH(WS-RECEIVE-LENGTH) END-EXEC.
 
-      * Perform very basic "parsing" of terminal input data.
-      * Starting after TRANID, skip blanks and get numeric field.
+      *    Perform very basic parsing of terminal input data.
+           UNSTRING WS-TERMINAL-INPUT DELIMITED BY ALL SPACES INTO
+                WS-TRANID       COUNT IN WS-TRANID-LEN
+                WS-SUPPLIER-TXT COUNT IN WS-SUPPLIER-LEN
+           END-UNSTRING.
 
-      *    Start at first character after TRANID (assuming 4 char tranid)
-           MOVE 8 TO SUPPID-START.
-      *    Scan forward until end of input or non-blank character found.     
-           PERFORM UNTIL SUPPID-START GREATER THAN WS-RECEIVE-LENGTH OR
-                         WS-TERMINAL-INPUT(SUPPID-START:1) NOT EQUAL ' '
-             ADD 1 TO SUPPID-START
-           END-PERFORM.
+      *    This example only needs us to populate the supplier ID
+      *    field. Initialize the structure and store our fake supplier
+      *    in the STOCK-PART structure.
+           MOVE LOW-VALUES TO WS-STOCK-PART.
 
-      *    Start at previously determined point.
-           MOVE SUPPID-START TO SUPPID-END.
-      *    Scan forward until end of input or *blank* character found.     
-           PERFORM UNTIL SUPPID-END GREATER THAN WS-RECEIVE-LENGTH OR
-                         WS-TERMINAL-INPUT(SUPPID-END:1) = ' '
-             ADD 1 TO SUPPID-END
-           END-PERFORM.
-
-      *    If a supplier ID was provided on the command, use it.
-           IF SUPPID-END GREATER THAN SUPPID-START THEN
-              MOVE WS-TERMINAL-INPUT(SUPPID-START: 
-                   SUPPID-END - SUPPID-START) TO WS-SUPPLIER-NO
+      *    Check if a valid supplier ID was provided, else use
+      *    the CICS task number
+           IF WS-SUPPLIER-LEN > 0 AND WS-SUPPLIER-LEN < 9 AND
+                WS-SUPPLIER-TXT NUMERIC THEN
+              MOVE WS-SUPPLIER-TXT TO WS-SUPPLIER-NO
            ELSE
-      *    Otherwise use the CICS Task number as a default ID.
               MOVE EIBTASKN TO WS-SUPPLIER-NO
            END-IF.
 
-      *    Store Supplier ID in StockPart structure and 
-      *    write it to 'STOKPART' container.
-           MOVE WS-SUPPLIER-NO TO SUPPLIER.
-           EXEC CICS PUT CONTAINER('STOKPART') 
-                     CHANNEL(WS-LIBERTY-CHANNEL) 
+      *    Update the stock part supplier ID
+           MOVE WS-SUPPLIER-NO TO SUPPLIER IN WS-STOCK-PART.
+
+      *    Write the stock part to the correct container.
+           EXEC CICS PUT CONTAINER(CONT-STOCK-PART)
+                     CHANNEL(LIBERTY-CHANNEL)
                      FROM(WS-STOCK-PART) END-EXEC.
 
-      * Link to Liberty J2EE program passing channel.
-           EXEC CICS LINK PROGRAM(WS-LIBERTY-PROGRAM) 
-                     CHANNEL(WS-LIBERTY-CHANNEL) 
+      *    Link to Liberty J2EE program passing channel.
+           EXEC CICS LINK PROGRAM(LIBERTY-PROGRAM)
+                     CHANNEL(LIBERTY-CHANNEL)
                      RESP(LINK-RESP) RESP2(LINK-RESP2) END-EXEC.
 
-      * Perform basic response checking from LINK, report error.
+      *    Perform basic response checking from LINK, report error.
            IF LINK-RESP NOT EQUAL DFHRESP(NORMAL) THEN
-              MOVE WS-LIBERTY-PROGRAM TO ERROR-PROG
+
+              MOVE LIBERTY-PROGRAM TO ERROR-PROG
               MOVE LINK-RESP TO ERROR-RESP
               MOVE LINK-RESP2 TO ERROR-RESP2
-      *    Send the response data to the terminal.
-              EXEC CICS SEND TEXT FROM(ERROR-MESSAGE) 
-                     ERASE FREEKB END-EXEC    
+
+      *       Send the response data to the terminal.
+              EXEC CICS SEND TEXT FROM(ERROR-MESSAGE)
+                     ERASE FREEKB END-EXEC
       *
-      *    Return control to CICS (end transaction).
+      *       Return control to CICS (end transaction).
               EXEC CICS RETURN END-EXEC
            END-IF.
 
-      * Normal response from LINK so continue...
-      * Get Liberty output container from the channel
-           EXEC CICS GET CONTAINER('SUPPLIER') 
-                     CHANNEL(WS-LIBERTY-CHANNEL) 
+      *    Normal response from LINK so continue...
+      *    Get Liberty output container from the channel
+           EXEC CICS GET CONTAINER(CONT-SUPPLIER)
+                     CHANNEL(LIBERTY-CHANNEL)
                      INTO(WS-SUPPLIER) END-EXEC.
 
-      * Copy fields from container structure to output message.
-           MOVE SUPPLIER-ID TO RESP-SUPPLIER-ID.
-           MOVE SUPPLIER-NAME TO RESP-SUPPLIER-NAME.
+      *    Copy fields from container structure to output message.
+           MOVE SUPPLIER-ID IN WS-SUPPLIER TO RESP-SUPPLIER-ID.
+           MOVE SUPPLIER-NAME IN WS-SUPPLIER TO RESP-SUPPLIER-NAME.
 
-      * Copy Liberty USERID from container direct to output message.
-           EXEC CICS GET CONTAINER('USERID') 
-                     CHANNEL(WS-LIBERTY-CHANNEL) 
+      *    Copy Liberty USERID from container direct to output message.
+           EXEC CICS GET CONTAINER(CONT-USERID)
+                     CHANNEL(LIBERTY-CHANNEL)
                      INTO(RESP-CICS-USERID) END-EXEC.
 
       *    Send the complete response message to the terminal.
-           EXEC CICS SEND TEXT FROM(RESPONSE-MESSAGE) 
-                     ERASE FREEKB END-EXEC.    
+           EXEC CICS SEND TEXT FROM(RESPONSE-MESSAGE)
+                     ERASE FREEKB END-EXEC.
       *
       *    Return control to CICS (end transaction).
            EXEC CICS RETURN END-EXEC.
