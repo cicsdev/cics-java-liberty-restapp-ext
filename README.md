@@ -72,7 +72,7 @@ The VSAM examples use the sample file `SMPLXMPL`. For a sample CICS FILE definit
 
 
 ### To add the resources to Eclipse:
-1. Using an Eclipse development environment create a dynamic web project called `com.ibm.cicsdev.restapp-ext` and add the Java samples to the `src` folder.
+1. Using an Eclipse development environment create a dynamic web project called `com.ibm.cicsdev.restapp.ext` and add the Java samples to the `src` folder.
 1. Copy the `com.ibm.cicsdev.restappext.generated.jar` file to the folder `/WebContent/WEB-INF/lib` relative to the root of your WAR project.
 1. Add the CICS Liberty JVM server libraries to the build path of your project. 
 1. Add the `com.ibm.cicsdev.restappext.generated.jar` file to the project build path.
