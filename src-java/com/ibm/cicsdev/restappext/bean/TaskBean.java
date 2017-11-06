@@ -2,49 +2,41 @@
 /*                                                                    */
 /* SAMPLE                                                             */
 /*                                                                    */
-/* (c) Copyright IBM Corp. 2016 All Rights Reserved                   */       
+/* (c) Copyright IBM Corp. 2017 All Rights Reserved                   */       
 /*                                                                    */
 /* US Government Users Restricted Rights - Use, duplication or        */
 /* disclosure restricted by GSA ADP Schedule Contract with IBM Corp   */
 /*                                                                    */
 package com.ibm.cicsdev.restappext.bean;
 
-import com.ibm.cics.server.CicsException;
-import com.ibm.cics.server.Task;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
 
 /**
  * Bean used by the com.ibm.cicsdev.restappext.TaskInformation
  * class to return basic task information in the form of JSON
  * to a requester.
  * 
- * @author Michael Jones (michaej8@uk.ibm.com)
+ * @author Michael Jones 
  *
  */
-public class CICSInfoBean {
+@XmlAccessorType(XmlAccessType.NONE)
+@XmlType(name = "status")
+public class TaskBean {
 	
-	/**
-	 * Sets up all the required fields for the class
-	 * as part of the construction method
-	 */
-	public CICSInfoBean(){
-		this.setTasknum();
-		this.setTransid();
-		this.setUserid();
-	}
-
 	/** Stores the transaction code **/
+    @XmlElement(name = "transid") 
 	public String transid;
 	
 	/** Stores the user ID associated with task **/
+    @XmlElement(name = "userid") 
 	public String userid;
 	
 	/** Stores the task number for the request **/
+    @XmlElement(name = "tasknum") 
 	public String tasknum;
-	
-	/** Used by the class to avoid re-initializing the task
-	 * object with each call to the set methods.
-	 */
-	private Task task;
 	
 	/**
 	 * Returns the 4 letter transaction code as a
@@ -61,13 +53,9 @@ public class CICSInfoBean {
 	 * an input as it relies on the Task object to
 	 * resolve the id.
 	 */
-	public void setTransid(){
+	public void setTransid(String tranName){
 		
-		if(task == null){
-			task = Task.getTask();
-		}
-		
-		transid = task.getTransactionName();
+		transid = tranName;
 		
 	}
 	
@@ -86,18 +74,9 @@ public class CICSInfoBean {
 	 * a parameter as it relies on the Task class
 	 * to resolve the actual value.
 	 */
-	public void setUserid(){
+	public void setUserid(String user){
 		
-		if(task == null){
-			task = Task.getTask();
-		}
-		
-		try {
-			userid = task.getUSERID();
-		} catch(CicsException e){
-			e.printStackTrace();
-			userid = "CICS_ERROR_SEE_LOG";
-		}
+		userid = user;
 	}
 	
 	/**
@@ -116,13 +95,9 @@ public class CICSInfoBean {
 	 * as we rely on the CICS library to provide the actual 
 	 * value.
 	 */
-	public void setTasknum(){
+	public void setTasknum(String cicsTaskNum){
 		
-		if(task == null){
-			task = Task.getTask();
-		}
-		
-		tasknum = Integer.toString(task.getTaskNumber());
+		tasknum = cicsTaskNum;
 		
 	}
 	
