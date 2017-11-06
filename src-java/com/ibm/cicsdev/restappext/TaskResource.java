@@ -12,7 +12,9 @@ package com.ibm.cicsdev.restappext;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import com.ibm.cics.server.CicsException;
 import com.ibm.cics.server.Task;
@@ -61,8 +63,15 @@ public class TaskResource
             cicsInfo.setUserid(task.getUSERID());
         }
         catch (CicsException e) {
-            e.printStackTrace();
-            cicsInfo.setUserid("CICS_ERROR_SEE_LOGS");
+
+            // A CICS failure - build an error message
+            String err = String.format("Error obtaining userid : %s", e.getMessage());
+
+            // Create a response
+            Response r = Response.serverError().entity(err).build();
+
+            // Pass the error back up the handler chain (JAX-RS 1.0)
+            throw new WebApplicationException(e, r);
         }
         
         // Retrieve the transaction code and task number
