@@ -28,19 +28,19 @@ public class TaskBean
      * Stores the transaction code
      */
     @XmlElement(name = "transid")
-    public String transid;
+    private String transid;
 
     /**
      * Stores the user ID associated with task
      */
     @XmlElement(name = "userid")
-    public String userid;
+    private String userid;
 
     /**
      * Stores the task number for the request
      */
     @XmlElement(name = "tasknum")
-    public String tasknum;
+    private String tasknum;
 
     /**
      * Returns the 4 letter transaction code as a String to the caller.
