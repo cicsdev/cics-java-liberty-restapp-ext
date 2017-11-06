@@ -82,7 +82,6 @@ public class TaskBean
      * @return String The current task number
      */
     public String getTasknum() {
-        System.out.println("Current task number: " + tasknum);
         return tasknum;
     }
 
