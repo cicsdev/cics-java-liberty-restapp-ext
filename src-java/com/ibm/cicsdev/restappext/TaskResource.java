@@ -27,47 +27,48 @@ import com.ibm.cicsdev.restappext.bean.TaskBean;
  */
 @Path("taskInformation")
 @Produces(MediaType.APPLICATION_JSON)
-public class TaskResource {
-
-	/**
-	 * Creates a TaskBean and populates it with some
-	 * basic information about the associated CICS
-	 * TASK before returning it to the user.
-	 * 
-	 * The end result is transferred to JSON.
-	 * 
-	 * @return - taskInfo bean with populated TASK data
-	 */
-	@GET
-    public TaskBean getTaskInfo(){
-		
-		// Get hold of our CICS task object and create
-		// an empty TaskBean for storing it's information
-		Task task = Task.getTask();
-		TaskBean cicsInfo = new TaskBean();
-		
-		// If we didn't get a Task, end the application here
-		// with some information indicating the problem
-		if(task == null) {
-		    cicsInfo.setTasknum("NO_CICS_TASK_FOUND");
-		    cicsInfo.setUserid("NO_CICS_TASK_FOUND");
-		    cicsInfo.setTransid("NO_CICS_TASK_FOUND");
-		    return cicsInfo;
-		}
-		
-		// Get the CICS user ID, attempting to handle any
-		// exception that occurs as a result
-		try {
-			cicsInfo.setUserid(task.getUSERID());
-		} catch(CicsException e) {
-			e.printStackTrace();
-			cicsInfo.setUserid("CICS_ERROR_SEE_LOGS");
-		}
-		
-		// Retrieve the transaction code and task number
-		cicsInfo.setTransid(task.getTransactionName());
-		cicsInfo.setTasknum(Integer.toString(task.getTaskNumber()));
-		
-		return cicsInfo;
-	}
+public class TaskResource
+{
+    /**
+     * Creates a TaskBean and populates it with some
+     * basic information about the associated CICS
+     * TASK before returning it to the user.
+     * 
+     * The end result is transferred to JSON.
+     * 
+     * @return - taskInfo bean with populated TASK data
+     */
+    @GET
+    public TaskBean getTaskInfo() {
+        
+        // Get hold of our CICS task object and create
+        // an empty TaskBean for storing it's information
+        Task task = Task.getTask();
+        TaskBean cicsInfo = new TaskBean();
+        
+        // If we didn't get a Task, end the application here
+        // with some information indicating the problem
+        if (task == null) {
+            cicsInfo.setTasknum("NO_CICS_TASK_FOUND");
+            cicsInfo.setUserid("NO_CICS_TASK_FOUND");
+            cicsInfo.setTransid("NO_CICS_TASK_FOUND");
+            return cicsInfo;
+        }
+        
+        // Get the CICS user ID, attempting to handle any
+        // exception that occurs as a result
+        try {
+            cicsInfo.setUserid(task.getUSERID());
+        }
+        catch (CicsException e) {
+            e.printStackTrace();
+            cicsInfo.setUserid("CICS_ERROR_SEE_LOGS");
+        }
+        
+        // Retrieve the transaction code and task number
+        cicsInfo.setTransid(task.getTransactionName());
+        cicsInfo.setTasknum(Integer.toString(task.getTaskNumber()));
+        
+        return cicsInfo;
+    }
 }
