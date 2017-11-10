@@ -65,12 +65,5 @@ public class LinkToLiberty
         // Store in a return container
         Container contSupplier = ch.createContainer("SUPPLIER");
         contSupplier.put( supplier.getByteBuffer() );
-        
-        // Obtain the Userid from the CICS Task
-        String userid = Task.getTask().getUSERID();
-
-        // Store Userid in a new CHAR container named USERID.
-        Container contUser = ch.createContainer("USERID");
-        contUser.putString(userid);
     }
 }
