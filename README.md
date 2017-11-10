@@ -18,6 +18,8 @@ the options available for using the LINK command in Java with a commarea.
 * [`LinkToLiberty`](src-java/com/ibm/cicsdev/restappext/LinkToLiberty.java) - simple POJO to demonstrate how the `CICSProgram` annotation
 can be used to allow non-Java programs to issue an `EXEC CICS LINK` command and execute code in a Liberty JVM server. The `CICSProgram`
 annotation requires CICS Explorer or CICS Build Toolkit V5.3.0.8 or later.
+* [`LinkToSecurity`](src-java/com/ibm/cicsdev/restappext/LinkToSecurity.java) - Link to Liberty method to demonstrate some aspects of the security behaviour of Link to Liberty.  Returns the CICS userID and the Java Subject name in container CONT-IDENTITY.
+* [`LinkToLiberty`](src-java/com/ibm/cicsdev/restappext/LinkToLiberty.java) - Link to Liberty method to demonstrate aspects of transaction and Exception behaviour of Link to Liberty.  Expects input container "ACTION" containing one of {"COMMIT","ROLLBACK","ABEND","THROW","CATCH","PERCOLATE"} and will act accordingly.
 * [`TemporaryStorageResource`](src-java/com/ibm/cicsdev/restappext/TemporaryStorageResource.java) - several methods used to manipulate TSQs.
 * [`TransientDataResource`](src-java/com/ibm/cicsdev/restappext/TransientDataResource.java)
 * [`VsamKsdsFileResource`](src-java/com/ibm/cicsdev/restappext/VsamKsdsFileResource.java) - demonstrates use of the JCICS API to
@@ -42,7 +44,9 @@ access a VSAM KSDS file.
 * [`src-cobol/GETPART.cbl`](src-cobol/GETPART.cbl) - receive a part ID in a commarea and return a complete StockPart record.
 * [`src-cobol/GETSUPPL.cbl`](src-cobol/GETSUPPL.cbl) - receive a StockPart record in the commarea and return the relevant Supplier record.
 * [`src-cobol/PROG1.cbl`](src-cobol/PROG1.cbl) - receive no commarea and write a message using COBOL DISPLAY.
-* [`src-cobol/SUPPLINK.cbl`](src-cobol/SUPPLINK.cbl) - run from terminal to invoke GETSUPPI (LinkToLiberty.java) via Link to Liberty.
+* [`src-cobol/LINK2SUP.cbl`](src-cobol/LINK2SUP.cbl) - run from terminal to invoke GETSUPPI (LinkToLiberty.java) via Link to Liberty.
+* [`src-cobol/LINK2SEC.cbl`](src-cobol/LINK2SEC.cbl) - run from terminal to invoke L2LSEC (LinkToSecurity.java) via Link to Liberty and display results to the user.
+* [`src-cobol/LINK2TXN.cbl`](src-cobol/LINK2TXN.cbl) - run from terminal to invoke L2LTRAN (LinkToTransaction.java) via Link to Liberty, accepting input ACTION from the terminal and passing to Java in container "ACTION".
 
 
 
