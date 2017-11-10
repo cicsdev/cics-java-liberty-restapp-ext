@@ -31,10 +31,11 @@
        DATA DIVISION.
       *
        WORKING-STORAGE SECTION.
-      *
-      *    IDENTITY copybook containing userID and Principal.
-           COPY IDENTITY.
-      *
+
+      *    Structure map for response container from L2L.
+       01  IDENTITY.
+           03   CICS-USERID             PIC X(8).
+           03   JAVA-PRINCIPAL          PIC X(8).
       *
       *    Working storage definitions
        01  WS-STORAGE.
