@@ -23,7 +23,6 @@ import com.ibm.cics.server.CicsConditionException;
 import com.ibm.cics.server.Container;
 import com.ibm.cics.server.Task;
 import com.ibm.cics.server.invocation.CICSProgram;
-import com.ibm.cicsdev.restappext.record.IdentityRecord;
 import com.ibm.websphere.security.WSSecurityException;
 import com.ibm.websphere.security.auth.CredentialDestroyedException;
 import com.ibm.websphere.security.auth.WSSubject;
@@ -61,20 +60,21 @@ public class LinkToSecurity
             }
             else userName = "NOTKNOWN"; // No Principal in Subject.
         }
-        // Create a new IdentityRecord instance
-        IdentityRecord identityRecord = new IdentityRecord();
         
         // Obtain the Userid from the CICS Task
         String taskuserid = Task.getTask().getUSERID();
- 
-        // Populate IdentityRecord with Subject name & CICS userid.
-        identityRecord.setJavaPrincipal(userName);
-        identityRecord.setCicsUserid(taskuserid);
+
+        // Append taskuserid & userName to StringBuffer, padding each to 8 chars:
+        StringBuffer sb = new StringBuffer();
+        sb.append(taskuserid);
+        for (int i=taskuserid.length() ; i < 8 ; i++) sb.append(' ');
+        sb.append(userName);
+        for (int i=userName.length() ; i < 8 ; i++)   sb.append(' ');
        
-        // Return identityRecord in container CONT-IDENTITY in current channel.
+        // Return sb content in CHAR container CONT-IDENTITY in current channel.
         Channel ch = Task.getTask().getCurrentChannel();
         Container contIdentityRecord = ch.createContainer("CONT-IDENTITY");
-        contIdentityRecord.put( identityRecord.getByteBuffer() );
+        contIdentityRecord.putString(sb.toString());
 
         //**********************************************************************
         // An alternative method to obtain the user information from the Subject:
