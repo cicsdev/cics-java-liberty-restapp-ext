@@ -31,12 +31,12 @@
         PROGRAM(LINK2SUP) TASKDATALOC(ANY)
 
  DEFINE TRANSACTION(JL2S)   GROUP(RESTAPPX)
-         PROGRAM(LINK2SEC) TASKDATALOC(ANY)
+        PROGRAM(LINK2SEC) TASKDATALOC(ANY)
 
  DEFINE TRANSACTION(JL2T)   GROUP(RESTAPPX)
-         PROGRAM(LINK2TXN) TASKDATALOC(ANY)
+        PROGRAM(LINK2TXN) TASKDATALOC(ANY)
         
  DEFINE TSMODEL(L2LMODEL) GROUP(RESTAPPX)                                   
-       DESCRIPTION(Recoverable TS for L2L)                                       
-       PREFIX(L2L) LOCATION(AUXILIARY) RECOVERY(YES)      
-       SECURITY(NO)                           
+        DESCRIPTION(Recoverable TS for L2L)                                       
+        PREFIX(L2L) LOCATION(AUXILIARY) RECOVERY(YES)      
+        SECURITY(NO)                           
