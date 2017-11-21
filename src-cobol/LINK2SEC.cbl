@@ -24,7 +24,7 @@
 
        IDENTIFICATION DIVISION.
        PROGRAM-ID.              LINK2SEC.
-       DATE-WRITTEN.            October 2017.
+       DATE-WRITTEN.            November 2017.
       *
        ENVIRONMENT DIVISION.
       *
@@ -32,25 +32,18 @@
       *
        WORKING-STORAGE SECTION.
 
-      *    Structure map for response container from L2L.
-       01  IDENTITY.
-           03   CICS-USERID             PIC X(8).
-           03   JAVA-PRINCIPAL          PIC X(8).
-      *
       *    Working storage definitions
        01  WS-STORAGE.
            03 LINK-RESP             PIC 9(8)  COMP    VALUE ZERO.
            03 LINK-RESP2            PIC 9(8)  COMP    VALUE ZERO.
 
       *    Message to display for normal completion.
-      *    Display Link to Liberty USERID, Supplier ID and name.
+      *    Display Link to Liberty USERID and Java Principal name.
        01 RESPONSE-MESSAGE.
-          03 FILLER PIC X(13) VALUE 'CICS USERID: '.
-          03 RESP-CICS-USERID PIC X(8) DISPLAY.
-          03 FILLER PIC X(17) VALUE ' Java Principal: '.
-          03 RESP-PRINCIPAL PIC X(8).
-      *   03 FILLER PIC X(16) VALUE ' SUPPLIER NAME: '.
-      *   03 RESP-SUPPLIER-NAME PIC X(40).
+          03 FILLER PIC X(13)            VALUE 'CICS USERID: '.
+          03 RESP-USERID    PIC X(10)    VALUE SPACES.
+          03 FILLER PIC X(17)            VALUE ' Java Principal: '.
+          03 RESP-PRINCIPAL PIC X(10)    VALUE SPACES.
 
       *   Error message to display if Link to Liberty fails.
       *   Include slots for target PROGRAM, RESP and RESP2.
@@ -63,9 +56,10 @@
           03 ERROR-RESP2 PIC 9(8) DISPLAY.
 
       *   Names of various CICS constructs
-       77 LIBERTY-CHANNEL PIC X(16) VALUE 'LIBERTY-CHANNEL'.
-       77 LIBERTY-PROGRAM PIC X(8)  VALUE 'L2LSEC'.
-       77 CONT-IDENTITY   PIC X(16) VALUE 'CONT-IDENTITY'.
+       77 LIBERTY-CHANNEL PIC X(16)   VALUE 'L2LCHANNEL'.
+       77 LIBERTY-PROGRAM PIC X(8)    VALUE 'L2LSEC'.
+       77 CONT-USERID     PIC X(16)   VALUE 'USERID'.
+       77 CONT-PRINCIPAL  PIC X(16)   VALUE 'PRINCIPAL'.
       *
       *
        PROCEDURE DIVISION USING DFHEIBLK.
@@ -84,28 +78,29 @@
               MOVE LINK-RESP TO ERROR-RESP
               MOVE LINK-RESP2 TO ERROR-RESP2
 
-      *       Send the response data to the terminal.
+      *       Send the error response to the terminal.
               EXEC CICS SEND TEXT FROM(ERROR-MESSAGE)
                      ERASE FREEKB END-EXEC
+      * 
+           ELSE
+
+      *       Normal response from LINK so continue...
+      *       Get USERID output container from the channel
+              EXEC CICS GET CONTAINER(CONT-USERID)
+                        CHANNEL(LIBERTY-CHANNEL)
+                        INTO(RESP-USERID) END-EXEC
+
+      *       Get PRINCIPAL output container from the channel
+              EXEC CICS GET CONTAINER(CONT-PRINCIPAL)
+                        CHANNEL(LIBERTY-CHANNEL)
+                        INTO(RESP-PRINCIPAL) END-EXEC
+
+      *       Send the complete response message to the terminal.
+              EXEC CICS SEND TEXT FROM(RESPONSE-MESSAGE)
+                        ERASE FREEKB END-EXEC
       *
-      *       Return control to CICS (end transaction).
-              EXEC CICS RETURN END-EXEC
            END-IF.
 
-      *    Normal response from LINK so continue...
-      *    Get Liberty output container from the channel
-           EXEC CICS GET CONTAINER(CONT-IDENTITY)
-                     CHANNEL(LIBERTY-CHANNEL)
-                     INTO(IDENTITY) END-EXEC.
-
-      *    Copy fields from container structure to output message.
-           MOVE CICS-USERID TO RESP-CICS-USERID.
-           MOVE JAVA-PRINCIPAL TO RESP-PRINCIPAL.
-
-      *    Send the complete response message to the terminal.
-           EXEC CICS SEND TEXT FROM(RESPONSE-MESSAGE)
-                     ERASE FREEKB END-EXEC.
-      *
       *    Return control to CICS (end transaction).
            EXEC CICS RETURN END-EXEC.
       *

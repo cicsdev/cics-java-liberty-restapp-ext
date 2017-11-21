@@ -42,8 +42,7 @@
            03 WS-TRANID-LEN         PIC S9(8) COMP-4  VALUE ZERO.
            03 WS-TRANID-POS         PIC S9(8) COMP-4  VALUE ZERO.
            03 WS-TRANID             PIC X(4)          VALUE SPACES.
-           03 WS-ACTION             PIC X(10)   VALUE 'COMMIT'.
-              88 WS-ACTION-ROLLBACK             VALUE 'ROLLBACK'.
+           03 WS-ACTION             PIC X(10)         VALUE SPACES.
            03 WS-ACTION-LEN         PIC S9(8) COMP-4  VALUE ZERO.
            03 LINK-RESP             PIC 9(8)  COMP    VALUE ZERO.
            03 LINK-RESP2            PIC 9(8)  COMP    VALUE ZERO.
@@ -77,7 +76,7 @@
           03 ERROR-RESP2 PIC 9(8) DISPLAY.
 
       *   Various constants, eg CICS resource names.
-       77 LIBERTY-CHANNEL PIC X(16) VALUE 'LIBERTY-CHANNEL'.
+       77 LIBERTY-CHANNEL PIC X(16) VALUE 'L2LCHANNEL'.
        77 LIBERTY-PROGRAM PIC X(8)  VALUE 'L2LTRAN'.
        77 CONT-ACTION     PIC X(16) VALUE 'ACTION'.
       *
@@ -105,10 +104,11 @@
       *    3) Find action in remainder of string after tranid
            UNSTRING WS-TERMINAL-INPUT(1 + WS-TRANID-POS:
                     WS-RECEIVE-LENGTH - WS-TRANID-POS)
-                DELIMITED BY ALL SPACE 
-                INTO WS-TRANID WS-ACTION.
+                    DELIMITED BY ALL SPACE 
+                    INTO WS-TRANID WS-ACTION.
 
-      *    Write item to TSQ
+      *    Write an item to a TSQ to demonstrate recoverability.
+      *    If the transaction abends, the write will be rolled back.
            MOVE EIBTASKN TO TSQ-TASK-ID.
            MOVE WS-ACTION TO TSQ-ACTION.
            EXEC CICS WRITEQ TS QUEUE(LIBERTY-PROGRAM) 
@@ -127,7 +127,7 @@
       *    Perform basic response checking from LINK, report error.
            IF LINK-RESP NOT EQUAL DFHRESP(NORMAL) THEN
 
-      *       Roll back the transaction.
+      *       Roll back the transaction if an error occurred.
               EXEC CICS SYNCPOINT ROLLBACK END-EXEC
 
       *       Send error message to terminal and return.
@@ -139,11 +139,6 @@
               EXEC CICS SEND TEXT FROM(ERROR-MESSAGE)
                      ERASE FREEKB END-EXEC
            ELSE 
-
-      *       Roll back the transaction if requested.
-              IF WS-ACTION-ROLLBACK THEN
-                 EXEC CICS SYNCPOINT ROLLBACK END-EXEC
-              END-IF
 
       *       Fill in response message
               MOVE EIBTRNID TO RESP-TRAN
