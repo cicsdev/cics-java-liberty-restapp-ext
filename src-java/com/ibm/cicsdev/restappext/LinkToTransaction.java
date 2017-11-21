@@ -22,57 +22,87 @@ import com.ibm.cics.server.Task;
 import com.ibm.cics.server.invocation.CICSProgram;
 
 /**
- * Provides an example of deploying a POJO into Liberty to allow the
- * use of CICS LINK into a Java EE environment.
- *
- * Link to Liberty is not supported in environments earlier than
- * CICS V5.3 with APAR PI63005.
- *
- * To successfully compile this source file, you will need to upgrade your
- * CICS Explorer or CICS Build Toolkit environment to V5.3.0.8 or later.
+ * Class containing Link to Liberty method performAction().
+ * See LinkToLiberty.java for more information.
  */
 public class LinkToTransaction
 {
 	private static final String CICSPROG = "L2LTRAN";
-    
-    @CICSProgram(CICSPROG)  // Note annotation argument may be a constant String or literal.
+
+	/**
+     * performAction() - method to demonstrate the transactional behaviour of
+     * Link to Liberty in various scenarios such as abends and Exceptions. 
+     * This method is linked to by the LINK2TXN COBOL program, passing the ACTION container.
+     * 
+     * @throws CicsConditionException
+     * @throws UnsupportedEncodingException
+     */
+	
+	// @CICSProgram annotation argument may be a constant String or literal.
+    @CICSProgram(CICSPROG)  
     public void performAction() throws CicsConditionException, UnsupportedEncodingException
     {
-    	// First write a record to the TSQ with this program name and Task number. 
-        TSQ tsq = new TSQ(); tsq.setName(CICSPROG);  // TSQ has same name as the L2L program.
+    	// Write an item to a TSQ to demonstrate backout in the case of rollback. 
+        TSQ tsq = new TSQ(); 
+        
+        // TSQ has same name as the L2L program. This will match the TSMODEL in DFHCSD.txt
+        tsq.setName(CICSPROG);  
+        
+        // Form the item string and write it to the TSQ; convert using EBCDIC encoding.
     	String itemStr = "Written from "+CICSPROG+" by Task "+Task.getTask().getTaskNumber();
-        int item = tsq.writeItem(itemStr.getBytes("IBM037"));  // Write converted String to TSQ. 
-    	
-        // Read container to determine action.  Content already uppercased by caller.
-        Channel ch = Task.getTask().getCurrentChannel();    // Channel passed on LINK 
+        int item = tsq.writeItem(itemStr.getBytes("IBM037"));  
+
+        // Get the Channel passed on LINK, to access containers.
+        Channel ch = Task.getTask().getCurrentChannel();    
+        
+        // Get a reference to the ACTION container.
         Container actionCont = ch.getContainer("ACTION");   // Null if no ACTION container
+        
+        // Read ACTION container to determine action.  Content already uppercased by caller.
         String action = actionCont.getString().trim();      // NPE if no ACTION container. 
         
-        // switch on String variable supported from Java 7 and above.
-        switch(action) {  
-        case "ABEND":  // Abend task "manually" with specific abend code.
+        // switch on a String variable is supported in Java 7 and above.
+        switch(action) {
+        case "":       
+        	// No action - NOOP.
+        	break;
+        case "ABEND":  
+        	// Abend task "manually" with specific abend code.
         	Task.getTask().abend("AL2L");
         	break;
-        case "ROLLBACK":  // These actions are done by caller after return. NOOP here.
-        case "COMMIT":
+        case "ROLLBACK":  
+        	// Not permitted in L2L method - will abend.
+        	Task.getTask().rollback(); 
         	break;  
-        case "THROW": throw new NullPointerException();  // Just to see what happens...
+        case "COMMIT":
+        	// Not permitted in L2L method - will abend.
+        	Task.getTask().commit();   
+        	break;  
+        case "THROW": 
+        	// Throw an explicit NullPointerException to see what happens.
+        	throw new NullPointerException();  
         case "CATCH":
-        case "PERCOLATE": // Do something which could result in CicsConditionException
+        case "PERCOLATE": 
+        	// Do something likely to result in a CicsConditionException
         	try {
         		ItemHolder holder = new ItemHolder();
         		tsq.readItem(item + 1, holder);        // ITEMERR highly likely!
         	}
-        	catch(CicsConditionException cce) {  // Catch it, handle expected conditions.
-        		if (cce instanceof InvalidQueueIdException) {  // QIDERR condition "expected"
-        			// Do something sensible, end normally.
+    		// Catch CicsConditionException, handle "expected" instances. 
+        	catch(CicsConditionException cce) {  
+        		if (cce instanceof InvalidQueueIdException) {  
+        			// QIDERR condition is an "expected" condition.
+        			// Do something sensible, end normally.  In this case NOOP.
         		}
-        		// Rethrow "unexpected" conditions, CICS will abend task with AExx code.
-        		if (action.equals("PERCOLATE")) throw cce;  
+        		// If action is PERCOLATE, rethrow "unexpected" conditions. 
+        		if (action.equals("PERCOLATE")) {
+        			throw cce;           // CICS will abend task with AExx code. 
+        		}
         	}
         	break;
-        default: throw new IllegalArgumentException("Invalid action: "+action);
-        
-        } // switch(action)
-    } //performAction()
+        default: 
+        	// Unexpected action, throw an IllegalArgumentException.
+        	throw new IllegalArgumentException("Invalid action: "+action);
+        } 
+    } 
 }

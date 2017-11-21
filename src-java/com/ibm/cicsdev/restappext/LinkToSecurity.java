@@ -10,99 +10,81 @@
 
 package com.ibm.cicsdev.restappext;
 
+import java.security.AccessControlContext;
 import java.security.AccessController;
 import java.security.Principal;
 import java.util.Iterator;
 import java.util.Set;
 
 import javax.security.auth.Subject;
-import javax.security.auth.login.CredentialExpiredException;
 
 import com.ibm.cics.server.Channel;
 import com.ibm.cics.server.CicsConditionException;
 import com.ibm.cics.server.Container;
 import com.ibm.cics.server.Task;
 import com.ibm.cics.server.invocation.CICSProgram;
-import com.ibm.websphere.security.WSSecurityException;
-import com.ibm.websphere.security.auth.CredentialDestroyedException;
-import com.ibm.websphere.security.auth.WSSubject;
-import com.ibm.websphere.security.cred.WSCredential;
-import com.ibm.wsspi.security.credentials.saf.SAFCredential;
 
 /**
- * Provides an example of deploying a POJO into Liberty to allow the
- * use of CICS LINK into a Java EE environment.
- *
- * Link to Liberty is not supported in environments earlier than
- * CICS V5.3 with APAR PI63005.
- *
- * To successfully compile this source file, you will need to upgrade your
- * CICS Explorer or CICS Build Toolkit environment to V5.3.0.8 or later.
+ * Class containing Link to Liberty method(s).
+ * See LinkToLiberty.java for more information.
  */
 public class LinkToSecurity
 {
-    
+    /**
+     * Link to Liberty enabled method to demonstrate security context
+     * propagation to the Java thread and to the CICS Liberty task.
+     * 
+     * Called as program L2LSEC by COBOL program LINK2SEC.cbl
+     * 
+     * @throws CicsConditionException
+     */
     @CICSProgram("L2LSEC")
-    public void getSecurityInfo() throws CicsConditionException, WSSecurityException, CredentialExpiredException, CredentialDestroyedException
+    public void getSecurityInfo() throws CicsConditionException
     {
-
-    	Subject activeSubject = Subject.getSubject(AccessController.getContext());
-        String userName = "NOSUBJCT";  // Value to use if Subject is null.
+        // Get the current access control context.
+    	AccessControlContext context = AccessController.getContext();
+    	
+    	// Get the Subject from context.
+        Subject activeSubject = Subject.getSubject(context);
+        
+        String principalName;  // The name of the Principal, if any.
+        
         if (activeSubject != null) {
+        	
+        	// The Subject exists; get the Set of Principals.
             Set<Principal>  principalSet = activeSubject.getPrincipals();
             
-            // Get just the first Principal from the Set, if any
+            // Get just the first Principal from the Set, if any.
             Iterator<Principal> principalIterator = principalSet.iterator();
             Principal principal = principalIterator.next();
             
-            if (principal != null) {  // Get name from Principal.
-            	userName = principal.getName();
+            if (principal != null) {  // Get the name from Principal.
+            	principalName = principal.getName();
             }
-            else userName = "NOTKNOWN"; // No Principal in Subject.
+            else {                    // No Principal in Subject.
+            	principalName = "UNKNOWN"; 
+            }
+        }
+        else {
+            principalName = "NOSUBJECT";  // Value to use if Subject is null.
         }
         
-        // Obtain the Userid from the CICS Task
-        String taskuserid = Task.getTask().getUSERID();
-
-        // Append taskuserid & userName to StringBuffer, padding each to 8 chars:
-        StringBuffer sb = new StringBuffer();
-        sb.append(taskuserid);
-        for (int i=taskuserid.length() ; i < 8 ; i++) sb.append(' ');
-        sb.append(userName);
-        for (int i=userName.length() ; i < 8 ; i++)   sb.append(' ');
-       
-        // Return sb content in CHAR container CONT-IDENTITY in current channel.
+        // Get the current channel to add the response containers.
         Channel ch = Task.getTask().getCurrentChannel();
-        Container contIdentityRecord = ch.createContainer("CONT-IDENTITY");
-        contIdentityRecord.putString(sb.toString());
+        
+        // Create container for the Principal name.
+        Container contPrincipal = ch.createContainer("PRINCIPAL");
+        
+        // Put the Principal name as a CHAR container.
+        contPrincipal.putString(principalName);
 
-        //**********************************************************************
-        // An alternative method to obtain the user information from the Subject:
-        String publicUserid="",realm="",privateUserid="",userinfo="";
-        WSCredential wsCred;
-        Subject callerSubject = WSSubject.getCallerSubject();
-		if (callerSubject != null) {
+        // Create container for the CICS task userid.
+        Container contUserid = ch.createContainer("USERID");
+        
+        // Obtain the Userid from the CICS Task
+        String cicsUserid = Task.getTask().getUSERID();
 
-			// get the public credential 					
-			Set<WSCredential> wsCredentials = callerSubject.getPublicCredentials(WSCredential.class);
-			Iterator<WSCredential> wsCredentialsIterator = wsCredentials.iterator();
-			if (wsCredentialsIterator.hasNext()) {
-				wsCred = wsCredentialsIterator.next();
-				publicUserid = wsCred.getSecurityName();
-				realm = wsCred.getRealmName();
-			}									
-			// publicUserid = callerSubject.getPrivateCredentials(WSCredential.class).iterator().next().getSecurityName();
-
-			    // Get the private credential from the subject
-			    privateUserid = callerSubject.getPrivateCredentials(SAFCredential.class).iterator().next().getUserId();
-
-			userinfo = "Realm:" + realm + " userid:" + publicUserid;				
-
-			if (!privateUserid.equalsIgnoreCase(publicUserid)) {
-				userinfo = userinfo + " private userid:" + privateUserid;
-			} 										
-		}	 
-		// Output user info to JVM sysout log.
-		System.out.println(userinfo);
+        // Put the userid as a CHAR container. 
+        contUserid.putString(cicsUserid);
     }
 }
