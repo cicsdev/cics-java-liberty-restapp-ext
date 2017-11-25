@@ -24,7 +24,7 @@ annotation requires CICS Explorer or CICS Build Toolkit V5.3.0.8 or later.
 * [`TransientDataResource`](src-java/com/ibm/cicsdev/restappext/TransientDataResource.java)
 * [`VsamKsdsFileResource`](src-java/com/ibm/cicsdev/restappext/VsamKsdsFileResource.java) - demonstrates use of the JCICS API to
 access a VSAM KSDS file.
-* [`TaskResource`](src-java/com/ibm/cicsdev/restappext/TaskInformation.java) - provides a simple REST service for retrieving basic task
+* [`TaskResource`](src-java/com/ibm/cicsdev/restappext/TaskResource.java) - provides a simple REST service for retrieving basic task
 information.
 
 ### Java package com.ibm.cicsdev.restappext.bean
