@@ -24,12 +24,15 @@ annotation requires CICS Explorer or CICS Build Toolkit V5.3.0.8 or later.
 * [`TransientDataResource`](src-java/com/ibm/cicsdev/restappext/TransientDataResource.java)
 * [`VsamKsdsFileResource`](src-java/com/ibm/cicsdev/restappext/VsamKsdsFileResource.java) - demonstrates use of the JCICS API to
 access a VSAM KSDS file.
+* [`TaskResource`](src-java/com/ibm/cicsdev/restappext/TaskInformation.java) - provides a simple REST service for retrieving basic task
+information.
 
 ### Java package com.ibm.cicsdev.restappext.bean
 * [`StatusBean`](src-java/com/ibm/cicsdev/restappext/bean/StatusBean.java) - simple JAX-RS bean for returning a status message back to the RESTful client.
 * [`StockPartBean`](src-java/com/ibm/cicsdev/restappext/bean/StockPartBean.java) - simple JAX-RS bean for returning the information held in a StockPart instance.
 * [`StockPartCollection`](src-java/com/ibm/cicsdev/restappext/bean/StockPartCollection.java) - simple JAX-RS bean for returning a collection of StockPartBean instances.
 * [`SupplierBean`](src-java/com/ibm/cicsdev/restappext/bean/SupplierBean.java) - simple JAX-RS bean for returning the information held in a Supplier instance.
+* [`TaskBean`](src-java/com/ibm/cicsdev/restappext/bean/TaskBean.java) - simple JAX-RS bean for storing task information retrieved from CICS.
 
 ### Java package com.ibm.cicsdev.restappext.helper
 * [`StockPartHelper`](src-java/com/ibm/cicsdev/restappext/helper/StockPartHelper.java) - class used to provide methods used when creating sample StockPart objects.
@@ -77,7 +80,7 @@ The VSAM examples use the sample file `SMPLXMPL`. For a sample CICS FILE definit
 
 
 ### To add the resources to Eclipse:
-1. Using an Eclipse development environment create a dynamic web project called `com.ibm.cicsdev.restapp.ext` and add the Java samples to the `src` folder.
+1. Using an Eclipse development environment create a dynamic web project called `com.ibm.cicsdev.restapp-ext` and add the Java samples to the `src` folder.
 1. Copy the `com.ibm.cicsdev.restappext.generated.jar` file to the folder `/WebContent/WEB-INF/lib` relative to the root of your WAR project.
 1. Add the CICS Liberty JVM server libraries to the build path of your project. 
 1. Add the `com.ibm.cicsdev.restappext.generated.jar` file to the project build path.
