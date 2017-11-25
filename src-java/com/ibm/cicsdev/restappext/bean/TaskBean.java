@@ -92,4 +92,5 @@ public class TaskBean
     public void setTasknum(String cicsTaskNum) {
         tasknum = cicsTaskNum;
     }
+
 }
