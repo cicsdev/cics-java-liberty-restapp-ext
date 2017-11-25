@@ -18,16 +18,21 @@ the options available for using the LINK command in Java with a commarea.
 * [`LinkToLiberty`](src-java/com/ibm/cicsdev/restappext/LinkToLiberty.java) - simple POJO to demonstrate how the `CICSProgram` annotation
 can be used to allow non-Java programs to issue an `EXEC CICS LINK` command and execute code in a Liberty JVM server. The `CICSProgram`
 annotation requires CICS Explorer or CICS Build Toolkit V5.3.0.8 or later.
+* [`LinkToSecurity`](src-java/com/ibm/cicsdev/restappext/LinkToSecurity.java) - Link to Liberty method to demonstrate some aspects of the security behaviour of Link to Liberty.  Returns the CICS userID and the Java Subject name in container CONT-IDENTITY.
+* [`LinkToLiberty`](src-java/com/ibm/cicsdev/restappext/LinkToLiberty.java) - Link to Liberty method to demonstrate aspects of transaction and Exception behaviour of Link to Liberty.  Expects input container "ACTION" containing one of {"COMMIT","ROLLBACK","ABEND","THROW","CATCH","PERCOLATE"} and will act accordingly.
 * [`TemporaryStorageResource`](src-java/com/ibm/cicsdev/restappext/TemporaryStorageResource.java) - several methods used to manipulate TSQs.
 * [`TransientDataResource`](src-java/com/ibm/cicsdev/restappext/TransientDataResource.java)
 * [`VsamKsdsFileResource`](src-java/com/ibm/cicsdev/restappext/VsamKsdsFileResource.java) - demonstrates use of the JCICS API to
 access a VSAM KSDS file.
+* [`TaskResource`](src-java/com/ibm/cicsdev/restappext/TaskResource.java) - provides a simple REST service for retrieving basic task
+information.
 
 ### Java package com.ibm.cicsdev.restappext.bean
 * [`StatusBean`](src-java/com/ibm/cicsdev/restappext/bean/StatusBean.java) - simple JAX-RS bean for returning a status message back to the RESTful client.
 * [`StockPartBean`](src-java/com/ibm/cicsdev/restappext/bean/StockPartBean.java) - simple JAX-RS bean for returning the information held in a StockPart instance.
 * [`StockPartCollection`](src-java/com/ibm/cicsdev/restappext/bean/StockPartCollection.java) - simple JAX-RS bean for returning a collection of StockPartBean instances.
 * [`SupplierBean`](src-java/com/ibm/cicsdev/restappext/bean/SupplierBean.java) - simple JAX-RS bean for returning the information held in a Supplier instance.
+* [`TaskBean`](src-java/com/ibm/cicsdev/restappext/bean/TaskBean.java) - simple JAX-RS bean for storing task information retrieved from CICS.
 
 ### Java package com.ibm.cicsdev.restappext.helper
 * [`StockPartHelper`](src-java/com/ibm/cicsdev/restappext/helper/StockPartHelper.java) - class used to provide methods used when creating sample StockPart objects.
@@ -35,6 +40,7 @@ access a VSAM KSDS file.
 ### COBOL copybooks
 * [`src-cobol/STOKPART.cpy`](src-cobol/STOKPART.cpy) - copybook used to generate the `StockPart` class.
 * [`src-cobol/SUPPLIER.cpy`](src-cobol/SUPPLIER.cpy) - copybook used to generate the `Supplier` class.
+* [`src-cobol/IDENTITY.cpy`](src-cobol/SUPPLIER.cpy) - copybook used to map data passed data back from LinkToSecurity.java.
 
 ### COBOL source files
 * [`src-cobol/ADDPART.cbl`](src-cobol/ADDPART.cbl) - write a STOCK-PART commarea to a file.
@@ -42,6 +48,9 @@ access a VSAM KSDS file.
 * [`src-cobol/GETPART.cbl`](src-cobol/GETPART.cbl) - receive a part ID in a commarea and return a complete StockPart record.
 * [`src-cobol/GETSUPPL.cbl`](src-cobol/GETSUPPL.cbl) - receive a StockPart record in the commarea and return the relevant Supplier record.
 * [`src-cobol/PROG1.cbl`](src-cobol/PROG1.cbl) - receive no commarea and write a message using COBOL DISPLAY.
+* [`src-cobol/LINK2SUP.cbl`](src-cobol/LINK2SUP.cbl) - run from terminal to invoke GETSUPPI (LinkToLiberty.java) via Link to Liberty.
+* [`src-cobol/LINK2SEC.cbl`](src-cobol/LINK2SEC.cbl) - run from terminal to invoke L2LSEC (LinkToSecurity.java) via Link to Liberty and display results to the user.
+* [`src-cobol/LINK2TXN.cbl`](src-cobol/LINK2TXN.cbl) - run from terminal to invoke L2LTRAN (LinkToTransaction.java) via Link to Liberty, accepting input ACTION from the terminal and passing to Java in container "ACTION".
 
 
 
@@ -86,6 +95,10 @@ The VSAM examples use the sample file `SMPLXMPL`. For a sample CICS FILE definit
 1. Install the `DFHWLP` resource defined in step 2 and ensure it becomes enabled.
 1. [CICS TS V5.3 with APAR PI63005 only] Add the `cicsts:link-1.0` feature to `server.xml`.
 
+### To add sample resources to CICS:
+1. Compile the supplied sample COBOL programs into a load library included in the CICS DFHRPL concatenation.
+1. Run a DFHCSDUP job using the definitions for the sample resources (etc/DFHCSD.txt).
+
 *Note:* in CICS TS V5.1, the file suffix `.jvmprofile` is not used.
 
 
@@ -114,6 +127,8 @@ may be used with this sample.
 ### LINK to Liberty
 * The ability to LINK to a program defined as a POJO in Liberty is available when using CICS TS V5.3 with APAR PI63005. Add the `cicsts:link-1.0`
 feature to server.xml to enable the automatic creation of a CICS PROGRAM definition.
+* Annotations must be enabled in the development environment for the LINKable programs (GETSUPPI,L2LSEC,L2LTRAN) to be defined automatically when the application is deployed.
+* At a CICS terminal, start transaction JL2L with (optionally) a numeric Supplier ID as a parameter to the transaction; JL2S to invoke the Security sample; or JL2T with (optionally) one of the LinkToTransaction action verbs (see above) to perform the associated transaction test.
 
 ### Temporary storage queues
 * Write an item to a TSQ using the `rest/tsq/write` URI.

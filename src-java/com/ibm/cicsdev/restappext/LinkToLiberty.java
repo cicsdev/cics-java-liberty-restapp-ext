@@ -44,7 +44,7 @@ public class LinkToLiberty
         Channel ch = Task.getTask().getCurrentChannel();
         
         // Get the correct container
-        Container contStockPart = ch.getContainer("STOKPART");
+        Container contStockPart = ch.getContainer("STOCK-PART");
         
         // Convert to a StockPart instance
         StockPart sp = new StockPart( contStockPart.get() );
@@ -59,7 +59,7 @@ public class LinkToLiberty
         supplier.setSupplierId(iSupplierId);
         
         // Create a new generated supplier name
-        String name = "Supplier #" + Task.getTask().getTaskNumber();
+        String name = "Supplier #" + iSupplierId;
         supplier.setSupplierName(name);
         
         // Store in a return container
