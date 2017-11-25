@@ -10,54 +10,45 @@ For further examples, see the [cics-java-jcics-samples](https://github.com/cicsd
 ## Source code
 
 ### Java package com.ibm.cicsdev.restappext
-* [`CICSApplication`](src-java/com/ibm/cicsdev/restappext/CICSApplication.java) - class used to specify the path for this application.
-* [`LinkChannelResource`](src-java/com/ibm/cicsdev/restappext/LinkChannelResource.java) - provides a method which demonstrates the use
-of channels and containers when using the LINK command in Java.
-* [`LinkCommareaResource`](src-java/com/ibm/cicsdev/restappext/LinkCommareaResource.java) - contains several methods demonstrating
-the options available for using the LINK command in Java with a commarea.
-* [`LinkToLiberty`](src-java/com/ibm/cicsdev/restappext/LinkToLiberty.java) - simple POJO to demonstrate how the `CICSProgram` annotation
-can be used to allow non-Java programs to issue an `EXEC CICS LINK` command and execute code in a Liberty JVM server. The `CICSProgram`
-annotation requires CICS Explorer or CICS Build Toolkit V5.3.0.8 or later.
-* [`LinkToSecurity`](src-java/com/ibm/cicsdev/restappext/LinkToSecurity.java) - Link to Liberty method to demonstrate some aspects of the security behaviour of Link to Liberty.  Returns the CICS userID and the Java Subject name in container CONT-IDENTITY.
-* [`LinkToLiberty`](src-java/com/ibm/cicsdev/restappext/LinkToLiberty.java) - Link to Liberty method to demonstrate aspects of transaction and Exception behaviour of Link to Liberty.  Expects input container "ACTION" containing one of {"COMMIT","ROLLBACK","ABEND","THROW","CATCH","PERCOLATE"} and will act accordingly.
-* [`TemporaryStorageResource`](src-java/com/ibm/cicsdev/restappext/TemporaryStorageResource.java) - several methods used to manipulate TSQs.
-* [`TransientDataResource`](src-java/com/ibm/cicsdev/restappext/TransientDataResource.java)
-* [`VsamKsdsFileResource`](src-java/com/ibm/cicsdev/restappext/VsamKsdsFileResource.java) - demonstrates use of the JCICS API to
-access a VSAM KSDS file.
-* [`TaskResource`](src-java/com/ibm/cicsdev/restappext/TaskResource.java) - provides a simple REST service for retrieving basic task
-information.
+* [`CICSApplication`](src/Java/com/ibm/cicsdev/restappext/CICSApplication.java) - class used to specify the path for this application.
+* [`LinkChannelResource`](src/Java/com/ibm/cicsdev/restappext/LinkChannelResource.java) - provides a method which demonstrates the use of channels and containers when using the LINK command in Java.
+* [`LinkCommareaResource`](src/Java/com/ibm/cicsdev/restappext/LinkCommareaResource.java) - contains several methods demonstrating the options available for using the LINK command in Java with a commarea.
+* [`LinkToLiberty`](src/Java/com/ibm/cicsdev/restappext/LinkToLiberty.java) - simple POJO to demonstrate how the `CICSProgram` annotation can be used to allow non-Java programs to issue an `EXEC CICS LINK` command and execute code in a Liberty JVM server. The `CICSProgram` annotation requires CICS Explorer or CICS Build Toolkit V5.3.0.8 or later.
+* [`LinkToSecurity`](src/Java/com/ibm/cicsdev/restappext/LinkToSecurity.java) - Link to Liberty method to demonstrate some aspects of the security behaviour of Link to Liberty.  Returns the CICS userID and the Java Subject name in container `CONT-IDENTITY`.
+* [`LinkToTransaction`](src/Java/com/ibm/cicsdev/restappext/LinkToTransaction.java) - Link to Liberty method to demonstrate aspects of transaction and Exception behaviour of Link to Liberty.  Expects input container "ACTION" containing one of { "COMMIT", "ROLLBACK", "ABEND", "THROW", "CATCH", "PERCOLATE" } and will act accordingly.
+* [`TaskResource`](src/Java/com/ibm/cicsdev/restappext/TaskResource.java) - provides a simple REST service for retrieving basic task information.
+* [`TemporaryStorageResource`](src/Java/com/ibm/cicsdev/restappext/TemporaryStorageResource.java) - several methods used to manipulate TSQs.
+* [`VsamKsdsFileResource`](src/Java/com/ibm/cicsdev/restappext/VsamKsdsFileResource.java) - demonstrates use of the JCICS API to access a VSAM KSDS file.
 
 ### Java package com.ibm.cicsdev.restappext.bean
-* [`StatusBean`](src-java/com/ibm/cicsdev/restappext/bean/StatusBean.java) - simple JAX-RS bean for returning a status message back to the RESTful client.
-* [`StockPartBean`](src-java/com/ibm/cicsdev/restappext/bean/StockPartBean.java) - simple JAX-RS bean for returning the information held in a StockPart instance.
-* [`StockPartCollection`](src-java/com/ibm/cicsdev/restappext/bean/StockPartCollection.java) - simple JAX-RS bean for returning a collection of StockPartBean instances.
-* [`SupplierBean`](src-java/com/ibm/cicsdev/restappext/bean/SupplierBean.java) - simple JAX-RS bean for returning the information held in a Supplier instance.
-* [`TaskBean`](src-java/com/ibm/cicsdev/restappext/bean/TaskBean.java) - simple JAX-RS bean for storing task information retrieved from CICS.
+* [`StatusBean`](src/Java/com/ibm/cicsdev/restappext/bean/StatusBean.java) - simple JAX-RS bean for returning a status message back to the RESTful client.
+* [`StockPartBean`](src/Java/com/ibm/cicsdev/restappext/bean/StockPartBean.java) - simple JAX-RS bean for returning the information held in a `StockPart` instance.
+* [`StockPartCollection`](src/Java/com/ibm/cicsdev/restappext/bean/StockPartCollection.java) - simple JAX-RS bean for returning a collection of `StockPartBean` instances.
+* [`SupplierBean`](src/Java/com/ibm/cicsdev/restappext/bean/SupplierBean.java) - simple JAX-RS bean for returning the information held in a `Supplier` instance.
+* [`TaskBean`](src/Java/com/ibm/cicsdev/restappext/bean/TaskBean.java) - simple JAX-RS bean for storing task information retrieved from CICS.
 
 ### Java package com.ibm.cicsdev.restappext.helper
-* [`StockPartHelper`](src-java/com/ibm/cicsdev/restappext/helper/StockPartHelper.java) - class used to provide methods used when creating sample StockPart objects.
+* [`StockPartHelper`](src/Java/com/ibm/cicsdev/restappext/helper/StockPartHelper.java) - class used to provide methods used when creating sample `StockPart` objects.
 
 ### COBOL copybooks
-* [`src-cobol/STOKPART.cpy`](src-cobol/STOKPART.cpy) - copybook used to generate the `StockPart` class.
-* [`src-cobol/SUPPLIER.cpy`](src-cobol/SUPPLIER.cpy) - copybook used to generate the `Supplier` class.
-* [`src-cobol/IDENTITY.cpy`](src-cobol/SUPPLIER.cpy) - copybook used to map data passed data back from LinkToSecurity.java.
+* [`STOKPART.cpy`](src/Cobol/STOKPART.cpy) - copybook used to generate the `StockPart` class.
+* [`SUPPLIER.cpy`](src/Cobol/SUPPLIER.cpy) - copybook used to generate the `Supplier` class.
 
 ### COBOL source files
-* [`src-cobol/ADDPART.cbl`](src-cobol/ADDPART.cbl) - write a STOCK-PART commarea to a file.
-* [`src-cobol/ADDPARTC.cbl`](src-cobol/ADDPARTC.cbl) - write a STOCK-PART container to a file.
-* [`src-cobol/GETPART.cbl`](src-cobol/GETPART.cbl) - receive a part ID in a commarea and return a complete StockPart record.
-* [`src-cobol/GETSUPPL.cbl`](src-cobol/GETSUPPL.cbl) - receive a StockPart record in the commarea and return the relevant Supplier record.
-* [`src-cobol/PROG1.cbl`](src-cobol/PROG1.cbl) - receive no commarea and write a message using COBOL DISPLAY.
-* [`src-cobol/LINK2SUP.cbl`](src-cobol/LINK2SUP.cbl) - run from terminal to invoke GETSUPPI (LinkToLiberty.java) via Link to Liberty.
-* [`src-cobol/LINK2SEC.cbl`](src-cobol/LINK2SEC.cbl) - run from terminal to invoke L2LSEC (LinkToSecurity.java) via Link to Liberty and display results to the user.
-* [`src-cobol/LINK2TXN.cbl`](src-cobol/LINK2TXN.cbl) - run from terminal to invoke L2LTRAN (LinkToTransaction.java) via Link to Liberty, accepting input ACTION from the terminal and passing to Java in container "ACTION".
-
+* [`ADDPART.cbl`](src/Cobol/ADDPART.cbl) - write a `STOCK-PART` commarea to a file.
+* [`ADDPARTC.cbl`](src/Cobol/ADDPARTC.cbl) - write a `STOCK-PART` container to a file.
+* [`GETPART.cbl`](src/Cobol/GETPART.cbl) - receive a part ID in a commarea and return a complete `StockPart` record.
+* [`GETSUPPL.cbl`](src/Cobol/GETSUPPL.cbl) - receive a `StockPart` record in the commarea and return the relevant `Supplier` record.
+* [`LINK2SEC.cbl`](src/Cobol/LINK2SEC.cbl) - run from terminal to invoke L2LSEC ([`LinkToSecurity.java`](src/Java/com/ibm/cicsdev/restappext/LinkToSecurity.java)) via Link to Liberty and display results to the user.
+* [`LINK2SUP.cbl`](src/Cobol/LINK2SUP.cbl) - run from terminal to invoke GETSUPPI ([`LinkToLiberty.java`](src/Java/com/ibm/cicsdev/restappext/LinkToLiberty.java)) via Link to Liberty.
+* [`LINK2TXN.cbl`](src/Cobol/LINK2TXN.cbl) - run from terminal to invoke L2LTRAN ([`LinkToTransaction.java`](src/Java/com/ibm/cicsdev/restappext/LinkToTransaction.java)) via Link to Liberty, accepting input ACTION from the terminal and passing to Java in container "ACTION".
+* [`PROG1.cbl`](src/Cobol/PROG1.cbl) - receive no commarea and write a message using COBOL DISPLAY.
 
 
 ## Supporting files
-* [`etc/DFHCSD.txt`](etc/DFHCSD.txt) - output from a DFHCSDUP EXTRACT command for the sample resources used.
-* [`etc/DEFVSAM.jcl`](etc/DEFVSAM.jcl) - a sample job to define the dataset required to run the VSAM KSDS examples.
-* [`lib/com.ibm.cicsdev.restappext.generated.jar`](lib/com.ibm.cicsdev.restappext.generated.jar) - contains the Java
+* [`DFHCSD.txt`](etc/DFHCSD.txt) - output from a DFHCSDUP EXTRACT command for the sample resources used.
+* [`DEFVSAM.jcl`](etc/DEFVSAM.jcl) - a sample job to define the dataset required to run the VSAM KSDS examples.
+* [`com.ibm.cicsdev.restappext.generated.jar`](lib/com.ibm.cicsdev.restappext.generated.jar) - contains the Java
 source and class files generated using the JZOS record generator.
 
 
@@ -108,20 +99,20 @@ All JAX-RS methods can be invoked using a web browser with the root URI of `http
 
 ### LINK without data
 
-Invoke the COBOL program `PROG1` with no commarea using the `rest/commarea/empty` URI. See the [`PROG1.cbl`](src-cobol.cbl) program
+Invoke the COBOL program `PROG1` with no commarea using the `rest/commarea/empty` URI. See the [`PROG1.cbl`](src/Cobol/PROG1.cbl) program
 which may be used with this sample.
 
 
 ### LINK with a commarea
-* Invoke the COBOL program `ADDPART` using the `rest/commarea/addPart` URI. See the [`ADDPART.cbl`](src-cobol/ADDPART.cbl) program which
+* Invoke the COBOL program `ADDPART` using the `rest/commarea/addPart` URI. See the [`ADDPART.cbl`](src/Cobol/ADDPART.cbl) program which
 may be used with this sample.
-* Invoke the COBOL program `GETSUPPL` using the `rest/commarea/getSupplier` URI. See the [`GETSUPPL.cbl`](src-cobol/GETSUPPL.cbl) program which
+* Invoke the COBOL program `GETSUPPL` using the `rest/commarea/getSupplier` URI. See the [`GETSUPPL.cbl`](src/Cobol/GETSUPPL.cbl) program which
 may be used with this sample.
-* Invoke the COBOL program `GETPART` using the `rest/commarea/getPart` URI. See the [`GETPART.cbl`](src-cobol/GETPART.cbl) program which
+* Invoke the COBOL program `GETPART` using the `rest/commarea/getPart` URI. See the [`GETPART.cbl`](src/Cobol/GETPART.cbl) program which
 may be used with this sample.
 
 ### LINK with channels and containers
-* Invoke the COBOL program `ADDPARTC` using the `rest/channel/addPart` URI. See the [`ADDPARTC.cbl`](src-cobol/ADDPARTC.cbl) program which
+* Invoke the COBOL program `ADDPARTC` using the `rest/channel/addPart` URI. See the [`ADDPARTC.cbl`](src/Cobol/ADDPARTC.cbl) program which
 may be used with this sample.
 
 ### LINK to Liberty

@@ -42,31 +42,35 @@ public class LinkToSecurity
     public void getSecurityInfo() throws CicsConditionException
     {
         // Get the current access control context.
-    	AccessControlContext context = AccessController.getContext();
-    	
-    	// Get the Subject from context.
+        AccessControlContext context = AccessController.getContext();
+    
+        // Get the Subject from context.
         Subject activeSubject = Subject.getSubject(context);
         
-        String principalName;  // The name of the Principal, if any.
+        // The name of the Principal, if any.
+        String principalName;  
         
         if (activeSubject != null) {
-        	
-        	// The Subject exists; get the Set of Principals.
+        
+            // The Subject exists; get the Set of Principals.
             Set<Principal>  principalSet = activeSubject.getPrincipals();
             
             // Get just the first Principal from the Set, if any.
             Iterator<Principal> principalIterator = principalSet.iterator();
             Principal principal = principalIterator.next();
             
-            if (principal != null) {  // Get the name from Principal.
-            	principalName = principal.getName();
+            if (principal != null) {
+                // Get the name from Principal.
+                principalName = principal.getName();
             }
-            else {                    // No Principal in Subject.
-            	principalName = "UNKNOWN"; 
+            else {
+                // No Principal in Subject.
+                principalName = "UNKNOWN"; 
             }
         }
         else {
-            principalName = "NOSUBJECT";  // Value to use if Subject is null.
+            // Value to use if Subject is null.
+            principalName = "NOSUBJECT";  
         }
         
         // Get the current channel to add the response containers.
