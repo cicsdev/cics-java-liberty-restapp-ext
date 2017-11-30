@@ -95,7 +95,7 @@ The VSAM examples use the sample file `SMPLXMPL`. For a sample CICS FILE definit
 
 ## Running the examples
 
-All JAX-RS methods can be invoked using a web browser with the root URI of `http://host:port/com.ibm.cicsdev.restapp.ext/`.
+All JAX-RS methods can be invoked using a web browser with the root URI of `http://host:port/com.ibm.cicsdev.restappext/`.
 
 ### LINK without data
 
