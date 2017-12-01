@@ -3,7 +3,7 @@ Source code
 
 ## Java files
 
-### Package [`com.ibm.cicsdev.restappext`](src/Java/com/ibm/cicsdev.restappext)
+### [com.ibm.cicsdev.restappext](src/Java/com/ibm/cicsdev/restappext)
 
 * [`CICSApplication`](src/Java/com/ibm/cicsdev/restappext/CICSApplication.java) - class used to specify the path for this application.
 * [`LinkChannelResource`](src/Java/com/ibm/cicsdev/restappext/LinkChannelResource.java) - provides a method which demonstrates the use of channels and containers when using the LINK command in Java.
@@ -15,7 +15,7 @@ Source code
 * [`TemporaryStorageResource`](src/Java/com/ibm/cicsdev/restappext/TemporaryStorageResource.java) - several methods used to manipulate TSQs.
 * [`VsamKsdsFileResource`](src/Java/com/ibm/cicsdev/restappext/VsamKsdsFileResource.java) - demonstrates use of the JCICS API to access a VSAM KSDS file.
 
-### Package [`com.ibm.cicsdev.restappext.bean`](src/Java/com/ibm/cicsdev.restappext/bean)
+### [com.ibm.cicsdev.restappext.bean](src/Java/com/ibm/cicsdev/restappext/bean)
 
 * [`StatusBean`](src/Java/com/ibm/cicsdev/restappext/bean/StatusBean.java) - simple JAX-RS bean for returning a status message back to the RESTful client.
 * [`StockPartBean`](src/Java/com/ibm/cicsdev/restappext/bean/StockPartBean.java) - simple JAX-RS bean for returning the information held in a `StockPart` instance.
@@ -23,7 +23,7 @@ Source code
 * [`SupplierBean`](src/Java/com/ibm/cicsdev/restappext/bean/SupplierBean.java) - simple JAX-RS bean for returning the information held in a `Supplier` instance.
 * [`TaskBean`](src/Java/com/ibm/cicsdev/restappext/bean/TaskBean.java) - simple JAX-RS bean for storing task information retrieved from CICS.
 
-### Package [`com.ibm.cicsdev.restappext.helper`](src/Java/com/ibm/cicsdev.restappext/helper)
+### [com.ibm.cicsdev.restappext.helper](src/Java/com/ibm/cicsdev/restappext/helper)
 
 * [`StockPartHelper`](src/Java/com/ibm/cicsdev/restappext/helper/StockPartHelper.java) - class used to provide methods used when creating sample `StockPart` objects.
 
