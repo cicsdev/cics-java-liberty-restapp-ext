@@ -7,18 +7,13 @@ All JAX-RS methods can be invoked using a web browser with the following root UR
 
 ## LINK without data
 
-Invoke the COBOL program `PROG1` with no commarea using the `rest/commarea/empty` URI. See the [`PROG1.cbl`](src/Cobol/PROG1.cbl) program
-which may be used with this sample.
-
+* `rest/commarea/empty` - invokes the COBOL program [`PROG1`](src/Cobol/PROG1.cbl) with no commarea.
 
 ## LINK with a commarea
 
-* Invoke the COBOL program `ADDPART` using the `rest/commarea/addPart` URI. See the [`ADDPART.cbl`](src/Cobol/ADDPART.cbl) program which
-may be used with this sample.
-* Invoke the COBOL program `GETSUPPL` using the `rest/commarea/getSupplier` URI. See the [`GETSUPPL.cbl`](src/Cobol/GETSUPPL.cbl) program which
-may be used with this sample.
-* Invoke the COBOL program `GETPART` using the `rest/commarea/getPart` URI. See the [`GETPART.cbl`](src/Cobol/GETPART.cbl) program which
-may be used with this sample.
+* `rest/commarea/addPart` - invokes the COBOL program [`ADDPART.cbl`](src/Cobol/ADDPART.cbl).
+* `rest/commarea/getSupplier` - invokes the COBOL program [`GETSUPPL.cbl`](src/Cobol/GETSUPPL.cbl).
+* `rest/commarea/getPart` - invokes the COBOL program [`GETPART.cbl`](src/Cobol/GETPART.cbl).
 
 ## LINK with channels and containers
 
