@@ -34,16 +34,22 @@ in the updated container.
 
 ## Temporary storage queues
 
-* Write an item to a TSQ using the `rest/tsq/write` URI.
-* Update the first item in a TSQ using the `rest/tsq/update` URI.
-* Delete a TSQ using the `rest/tsq/delete` URI.
+These samples uses the [`TemporaryStorageResource`](src/Java/com/ibm/cicsdev/restappext/TemporaryStorageResource.java) JAX-RS resource to
+manipulate CICS Temporary Storage Queues (TSQs) using the JCICS API.
+
+* `rest/tsq/write` - writes an item to a TSQ.
+* `rest/tsq/update` - updates the first item in a TSQ.
+* `rest/tsq/delete` - delete a TSQ.
 
 
 ## VSAM KSDS
 
-* Write a new record to the file using the `rest/ksds/write` URI. This invokes the `VsamKsdsFileResource.writeNewRecord()` method.
-* Delete the first record in the file using the `rest/ksds/delete` URI. This invokes the `VsamKsdsFileResource.deleteRecord()` method.
-* Update the first record in the file using the `rest/ksds/update` URI. This invokes the `VsamKsdsFileResource.updateRecord()` method.
+These samples uses the [`VsamKsdsFileResource`](src/Java/com/ibm/cicsdev/restappext/VsamKsdsFileResource.java) JAX-RS resource to
+manipulate a VSAM Key-Sequenced DataSet (KSDS) using the JCICS API.
+
+* `rest/ksds/write` - writes a new record to the file.
+* `rest/ksds/delete` - deletes the first record in the file.
+* `rest/ksds/update` - updates the first record in the file.
 
 In all cases, the JSON returned will be the current contents of the file. Pressing refresh in the browser will repeat the GET request,
 causing a record to be written, updated, or deleted accordingly.
