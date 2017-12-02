@@ -1,9 +1,9 @@
 Running the JAX-RS examples
 ===========================
 
-All JAX-RS methods can be invoked using a web browser with the root URI
+All JAX-RS methods can be invoked using a web browser with the following root URI:
 
-`http://host:port/com.ibm.cicsdev.restappext/`.
+`http://host:port/com.ibm.cicsdev.restappext/`
 
 ## LINK without data
 
