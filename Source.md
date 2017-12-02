@@ -8,9 +8,9 @@ Source code
 * [`CICSApplication`](src/Java/com/ibm/cicsdev/restappext/CICSApplication.java) - class used to specify the path for this application.
 * [`LinkChannelResource`](src/Java/com/ibm/cicsdev/restappext/LinkChannelResource.java) - provides a method which demonstrates the use of channels and containers when using the LINK command in Java.
 * [`LinkCommareaResource`](src/Java/com/ibm/cicsdev/restappext/LinkCommareaResource.java) - contains several methods demonstrating the options available for using the LINK command in Java with a commarea.
-* [`LinkToLiberty`](src/Java/com/ibm/cicsdev/restappext/LinkToLiberty.java) - simple POJO to demonstrate how the `CICSProgram` annotation can be used to allow non-Java programs to issue an `EXEC CICS LINK` command and execute code in a Liberty JVM server. The `CICSProgram` annotation requires CICS Explorer or CICS Build Toolkit V5.3.0.8 or later.
-* [`LinkToSecurity`](src/Java/com/ibm/cicsdev/restappext/LinkToSecurity.java) - Link to Liberty method to demonstrate some aspects of the security behaviour of Link to Liberty.  Returns the CICS userID and the Java Subject name in container `CONT-IDENTITY`.
-* [`LinkToTransaction`](src/Java/com/ibm/cicsdev/restappext/LinkToTransaction.java) - Link to Liberty method to demonstrate aspects of transaction and Exception behaviour of Link to Liberty.  Expects input container "ACTION" containing one of { "COMMIT", "ROLLBACK", "ABEND", "THROW", "CATCH", "PERCOLATE" } and will act accordingly.
+* [`LinkToLiberty`](src/Java/com/ibm/cicsdev/restappext/LinkToLiberty.java) - simple POJO to demonstrate how the `@CICSProgram` annotation can be used to allow non-Java programs to issue an `EXEC CICS LINK` command and execute code in a Liberty JVM server.
+* [`LinkToSecurity`](src/Java/com/ibm/cicsdev/restappext/LinkToSecurity.java) - simple POJO containing a Link to Liberty method that demonstrates some aspects of the security behaviour of Link to Liberty.
+* [`LinkToTransaction`](src/Java/com/ibm/cicsdev/restappext/LinkToTransaction.java) - simple POJO containing Link to Liberty method to demonstrate aspects of transaction and Exception behaviour of Link to Liberty.
 * [`TaskResource`](src/Java/com/ibm/cicsdev/restappext/TaskResource.java) - provides a simple REST service for retrieving basic task information.
 * [`TemporaryStorageResource`](src/Java/com/ibm/cicsdev/restappext/TemporaryStorageResource.java) - several methods used to manipulate TSQs.
 * [`VsamKsdsFileResource`](src/Java/com/ibm/cicsdev/restappext/VsamKsdsFileResource.java) - demonstrates use of the JCICS API to access a VSAM KSDS file.
@@ -42,7 +42,7 @@ Source code
 * [`GETSUPPL.cbl`](src/Cobol/GETSUPPL.cbl) - receive a `StockPart` record in the commarea and return the relevant `Supplier` record.
 * [`LINK2SEC.cbl`](src/Cobol/LINK2SEC.cbl) - run from terminal to invoke L2LSEC ([`LinkToSecurity.java`](src/Java/com/ibm/cicsdev/restappext/LinkToSecurity.java)) via Link to Liberty and display results to the user.
 * [`LINK2SUP.cbl`](src/Cobol/LINK2SUP.cbl) - run from terminal to invoke GETSUPPI ([`LinkToLiberty.java`](src/Java/com/ibm/cicsdev/restappext/LinkToLiberty.java)) via Link to Liberty.
-* [`LINK2TXN.cbl`](src/Cobol/LINK2TXN.cbl) - run from terminal to invoke L2LTRAN ([`LinkToTransaction.java`](src/Java/com/ibm/cicsdev/restappext/LinkToTransaction.java)) via Link to Liberty, accepting input ACTION from the terminal and passing to Java in container "ACTION".
+* [`LINK2TXN.cbl`](src/Cobol/LINK2TXN.cbl) - run from terminal to invoke L2LTRAN ([`LinkToTransaction.java`](src/Java/com/ibm/cicsdev/restappext/LinkToTransaction.java)) via Link to Liberty.
 * [`PROG1.cbl`](src/Cobol/PROG1.cbl) - receive no commarea and write a message using COBOL DISPLAY.
 
 ## Supporting files
