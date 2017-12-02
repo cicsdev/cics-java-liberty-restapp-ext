@@ -51,8 +51,3 @@ Source code
 * [`DEFVSAM.jcl`](etc/DEFVSAM.jcl) - a sample job to define the dataset required to run the VSAM KSDS examples.
 * [`com.ibm.cicsdev.restappext.generated.jar`](lib/com.ibm.cicsdev.restappext.generated.jar) - contains the Java
 source and class files generated using the JZOS record generator.
-
-## Reference
-
-* For further details on the Link to Liberty functionality refer to this
-[developer center article](https://developer.ibm.com/cics/2016/11/14/link-to-liberty-now-available-in-cics-ts-v5-3/)

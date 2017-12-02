@@ -8,3 +8,8 @@ Running the Link to Liberty examples
 creation of a CICS PROGRAM definition.
 * Annotations must be enabled in the development environment for the LINKable programs (GETSUPPI,L2LSEC,L2LTRAN) to be defined automatically when the application is deployed.
 * At a CICS terminal, start transaction JL2L with (optionally) a numeric Supplier ID as a parameter to the transaction; JL2S to invoke the Security sample; or JL2T with (optionally) one of the LinkToTransaction action verbs (see above) to perform the associated transaction test.
+
+## Reference
+
+* For further details on the Link to Liberty functionality refer to this
+[developer center article](https://developer.ibm.com/cics/2016/11/14/link-to-liberty-now-available-in-cics-ts-v5-3/)
