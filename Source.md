@@ -6,8 +6,8 @@ Source code
 ### [com.ibm.cicsdev.restappext](src/Java/com/ibm/cicsdev/restappext)
 
 * [`CICSApplication`](src/Java/com/ibm/cicsdev/restappext/CICSApplication.java) - class used to specify the path for this application.
-* [`LinkChannelResource`](src/Java/com/ibm/cicsdev/restappext/LinkChannelResource.java) - provides a method which demonstrates the use of channels and containers when using the LINK command in Java.
-* [`LinkCommareaResource`](src/Java/com/ibm/cicsdev/restappext/LinkCommareaResource.java) - contains several methods demonstrating the options available for using the LINK command in Java with a commarea.
+* [`LinkChannelResource`](src/Java/com/ibm/cicsdev/restappext/LinkChannelResource.java) - demonstrates the use of channels and containers when using the LINK command in Java.
+* [`LinkCommareaResource`](src/Java/com/ibm/cicsdev/restappext/LinkCommareaResource.java) - demonstrates the options available for using the LINK command in Java with a commarea.
 * [`LinkToLiberty`](src/Java/com/ibm/cicsdev/restappext/LinkToLiberty.java) - simple POJO to demonstrate how the `@CICSProgram` annotation can be used to allow non-Java programs to issue an `EXEC CICS LINK` command and execute code in a Liberty JVM server.
 * [`LinkToSecurity`](src/Java/com/ibm/cicsdev/restappext/LinkToSecurity.java) - simple POJO containing a Link to Liberty method that demonstrates some aspects of the security behaviour of Link to Liberty.
 * [`LinkToTransaction`](src/Java/com/ibm/cicsdev/restappext/LinkToTransaction.java) - simple POJO containing Link to Liberty method to demonstrate aspects of transaction and Exception behaviour of Link to Liberty.
