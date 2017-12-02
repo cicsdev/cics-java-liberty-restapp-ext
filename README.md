@@ -21,7 +21,7 @@ A guide to deploying these samples into CICS can be found on the [Getting starte
 
 ## Running the code samples
 
-The [Running the examples](Running.md) page has instructions on how to execute the sample applications inside CICS.
+See the dedicated pages for executing the [JAX-RS](RunningJAXRS.md) and [Link to Liberty](RunningLinkToLiberty.md) sample applications inside CICS.
 
 ## License
 This project is licensed under [Apache License Version 2.0](LICENSE).
