@@ -3,7 +3,8 @@ cics-java-liberty-restapp-ext
 
 This repository provides sample materials for use with the IBM Redbooks video course
 "[Extending a CICS Web application using JCICS](https://www.redbooks.ibm.com/redbooks.nsf/redbookabstracts/crse0302.html?Open)". The
-application provided is a simple, RESTful web application providing several code examples for accessing CICS resources from Java. 
+application provided is a simple, RESTful web application providing several code examples for accessing CICS resources from Java using
+the JCICS API.
 
 This repository builds on the application constructed in the IBM Redbooks video course
 "[Developing a RESTful Web application for Liberty in CICS](https://www.redbooks.ibm.com/redbooks.nsf/redbookabstracts/crse0300.html?Open)",
