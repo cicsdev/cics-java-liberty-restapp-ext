@@ -21,7 +21,7 @@ The VSAM examples use the sample file `SMPLXMPL`. For a sample CICS FILE definit
 1. Add the CICS Liberty JVM server libraries to the build path of your project. 
 1. Add the `com.ibm.cicsdev.restappext.generated.jar` file to the project build path.
 1. Ensure the web project is targeted to compile at a level that is compatible with the Java level being used on CICS. This can be achieved by editing the Java Project Facet in the project properties.
-1. [Optional] Create a CICS bundle project called com.ibm.cicsdev.restappext.cicsbundle and add a dynamic web project include for the project created in step 1.
+1. [Optional] Create a CICS bundle project called `com.ibm.cicsdev.restappext.cicsbundle` and add a dynamic web project include for the project created in step 1.
 
 ### To start a JVM server in CICS:
 1. Enable Java support in the CICS region by adding the `SDFJAUTH` library to the STEPLIB concatenation and setting `USSHOME` and the `JVMPROFILEDIR` SIT parameters.
@@ -35,4 +35,4 @@ The VSAM examples use the sample file `SMPLXMPL`. For a sample CICS FILE definit
 
 ### To add sample resources to CICS:
 1. Compile the supplied sample COBOL programs into a load library included in the CICS DFHRPL concatenation.
-1. Run a DFHCSDUP job using the definitions for the sample resources (etc/DFHCSD.txt).
+1. Run a DFHCSDUP job using the definitions for the [sample resources](etc/DFHCSD.txt).
