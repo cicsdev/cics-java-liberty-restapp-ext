@@ -1,17 +1,17 @@
 Running the Link to Liberty examples
 ====================================
 
-The Link to Liberty samples are provided as COBOL programs, which `EXEC CICS LINK` to a Java method which
-has the `@CICSProgram` annotation. Note that the ability to LINK to a program defined as a POJO in Liberty is available when using:
+The Link to Liberty samples are provided as COBOL programs with associated Java classes, which demonstrate `EXEC CICS LINK` to
+a Java method which has the `@CICSProgram` annotation. Note that the ability to link to a program defined as a POJO in Liberty
+is available when using:
 
 * CICS TS V5.3 with [APAR PI63005](http://www-01.ibm.com/support/docview.wss?uid=swg1PI63005)
 * CICS TS V5.4
 
-Annotations must be enabled in the development environment for the LINKable programs to be defined automatically when the application
-is deployed. Add the `cicsts:link-1.0` feature to `server.xml` to enable the automatic creation of a CICS PROGRAM definition.
+Annotations must be enabled in the development environment, and the `cicsts:link-1.0` feature added to `server.xml`.
 
 
-## LINK to Liberty
+## Link to Liberty
 
 Each of the examples are initiated as a transaction from a CICS terminal, and invoke the method in the indicated Java class.
 
@@ -32,5 +32,8 @@ be one of the following values:
 
 ## Reference
 
-* For further details on the Link to Liberty functionality refer to this
-[developer center article](https://developer.ibm.com/cics/2016/11/14/link-to-liberty-now-available-in-cics-ts-v5-3/)
+See the following sites for further details on the Link to Liberty functionality:
+
+* [Linking to a Java EE application from a CICS program](https://www.ibm.com/support/knowledgecenter/SSGMCP_5.4.0/applications/developing/java/link_2_liberty.html)
+in the IBM Knowledge Center
+* [Developer center article](https://developer.ibm.com/cics/2016/11/14/link-to-liberty-now-available-in-cics-ts-v5-3/)
