@@ -31,8 +31,8 @@ The VSAM examples use the sample file `SMPLXMPL`. For a sample CICS FILE definit
 1. Install the `DFHWLP` resource defined in step 2 and ensure it becomes enabled.
 1. [CICS TS V5.3 with APAR PI63005 only] Add the `cicsts:link-1.0` feature to `server.xml`.
 
+*Note:* in CICS TS V5.1, the file suffix `.jvmprofile` is not used.
+
 ### To add sample resources to CICS:
 1. Compile the supplied sample COBOL programs into a load library included in the CICS DFHRPL concatenation.
 1. Run a DFHCSDUP job using the definitions for the sample resources (etc/DFHCSD.txt).
-
-*Note:* in CICS TS V5.1, the file suffix `.jvmprofile` is not used.
