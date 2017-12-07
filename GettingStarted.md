@@ -29,7 +29,7 @@ The VSAM examples use the sample file `SMPLXMPL`. For a sample CICS FILE definit
 1. Copy the CICS sample `DFHWLP.jvmprofile` zFS file to the `JVMPROFILEDIR` directory specified above and ensure the `JAVA_HOME` variable is set correctly.
 1. Add the `jaxrs-1.1` Liberty feature to `server.xml`.
 1. Install the `DFHWLP` resource defined in step 2 and ensure it becomes enabled.
-1. [CICS TS V5.3 with APAR PI63005 only] Add the `cicsts:link-1.0` feature to `server.xml`.
+1. [CICS TS V5.4, or V5.3 with APAR PI63005 only] Add the `cicsts:link-1.0` feature to `server.xml`.
 
 *Note:* in CICS TS V5.1, the file suffix `.jvmprofile` is not used.
 
