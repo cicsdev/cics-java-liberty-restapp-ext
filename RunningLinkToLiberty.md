@@ -8,7 +8,8 @@ is available when using:
 * CICS TS V5.3 with [APAR PI63005](http://www-01.ibm.com/support/docview.wss?uid=swg1PI63005)
 * CICS TS V5.4
 
-Annotations must be enabled in the development environment, and the `cicsts:link-1.0` feature added to `server.xml`.
+Annotations must be enabled in the development environment, and the `cicsts:link-1.0` feature added to `server.xml` for the
+linkable programs to be made available when the application is deployed.
 
 
 ## Link to Liberty
@@ -36,4 +37,5 @@ See the following sites for further details on the Link to Liberty functionality
 
 * [Linking to a Java EE application from a CICS program](https://www.ibm.com/support/knowledgecenter/SSGMCP_5.4.0/applications/developing/java/link_2_liberty.html)
 in the IBM Knowledge Center
-* [Developer center article](https://developer.ibm.com/cics/2016/11/14/link-to-liberty-now-available-in-cics-ts-v5-3/)
+* [Link to Liberty now available in CICS TS V5.3](https://developer.ibm.com/cics/2016/11/14/link-to-liberty-now-available-in-cics-ts-v5-3/)
+article in the CICS Developer Center
