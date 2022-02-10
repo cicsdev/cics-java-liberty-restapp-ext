@@ -16,6 +16,15 @@ For further examples, see the [cics-java-jcics-samples](https://github.com/cicsd
 
 Full details on the contents of this repository can be found on the [Source code](Source.md) page.
 
+## Pre-reqs
+
+* CICS TS V5.4 or later
+* Java SE 1.8 on the z/OS system
+* Java SE 1.8 on the workstation
+* Eclipse with the IBM CICS SDK for Java EE, Jakarta EE and Liberty, or any IDE that supports usage of the Maven Central artifact [com.ibm.cics:com.ibm.cics.server.](https://search.maven.org/artifact/com.ibm.cics/com.ibm.cics.server)
+* IBM Record Generator for Java V3.0 
+
+
 ## Getting started
 
 A guide to deploying these samples into CICS can be found on the [Getting started](GettingStarted.md) page.
