@@ -25,11 +25,12 @@ The VSAM examples use the sample file `SMPLXMPL`. For a sample CICS FILE definit
 
 ### To start a JVM server in CICS:
 1. Enable Java support in the CICS region by adding the `SDFJAUTH` library to the STEPLIB concatenation and setting `USSHOME` and the `JVMPROFILEDIR` SIT parameters.
-1. Define a Liberty JVM server called `DFHWLP` using the supplied sample definition `DFHWLP` in the CSD group `DFH$WLP`.
-1. Copy the CICS sample `DFHWLP.jvmprofile` zFS file to the `JVMPROFILEDIR` directory specified above and ensure the `JAVA_HOME` variable is set correctly.
-1. Add the `jaxrs-1.1` Liberty feature to `server.xml`.
-1. Install the `DFHWLP` resource defined in step 2 and ensure it becomes enabled.
-1. [CICS TS V5.4, or V5.3 with APAR PI63005 only] Add the `cicsts:link-1.0` feature to `server.xml`.
+    * Adding ``SDFJAUTH`` is **not required** if using CICS 5.5 or later.
+3. Define a Liberty JVM server called `DFHWLP` using the supplied sample definition `DFHWLP` in the CSD group `DFH$WLP`.
+4. Copy the CICS sample `DFHWLP.jvmprofile` zFS file to the `JVMPROFILEDIR` directory specified above and ensure the `JAVA_HOME` variable is set correctly.
+5. Add the `jaxrs-1.1` Liberty feature to `server.xml`.
+6. Install the `DFHWLP` resource defined in step 2 and ensure it becomes enabled.
+7. [CICS TS V5.4, or V5.3 with APAR PI63005 only] Add the `cicsts:link-1.0` feature to `server.xml`.
 
 *Note:* in CICS TS V5.1, the file suffix `.jvmprofile` is not used.
 
