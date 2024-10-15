@@ -30,7 +30,7 @@ Run the following in a local command prompt:
 
 This creates a WAR file inside the `build/libs` directory and a CICS bundle ZIP file inside the `build/distributions` directory.
 
-If using the CICS bundle ZIP, the CICS JVM server name should be modified in the  `jvmserver` property in the gradle build properties [file](gradle.properties) to match the required CICS JVMSERVER resource name, or alternatively can be set on the command line as follows.
+If using the CICS bundle ZIP, the default CICS JVM server name `DFHWLP`  should be modified in the `jvmserver` property in the gradle build  [file](build.gradle) to match the required CICS JVMSERVER resource name, or alternatively can be set on the command line as follows.
 
 
 `gradle clean build -Pjvmserver=MYJVM`
