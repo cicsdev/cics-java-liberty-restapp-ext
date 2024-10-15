@@ -1,14 +1,6 @@
 Getting started
 ===============
 
-## Pre-requisites
-
-* CICS TS V5.1 or later, due to the usage of the `getString()` methods.
-* Java SE 1.7 or later on the z/OS system
-* Java SE 1.7 or later on the workstation
-* Eclipse with WebSphere Developer Tools and CICS Explorer SDK V5.3.0.8 or later installed
-* Maven or Gradle buil tools
-
 ## Configuration
 
 The sample Java classes are designed to be added to a dynamic web project and deployed into a Liberty JVM server as a WAR,
