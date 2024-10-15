@@ -33,10 +33,6 @@ eclipse
 repositories 
 {
     mavenCentral()
-
-    flatDir {
-            dirs "$project.rootDir/lib"
-        }
 }
 
 
@@ -51,22 +47,20 @@ dependencies
     compileOnly("com.ibm.cics:com.ibm.cics.server.invocation.annotations")
     annotationProcessor("com.ibm.cics:com.ibm.cics.server.invocation:6.1")
 
-    // Compile against, but don't include JAXRS in the final build 
-    // https://mvnrepository.com/artifact/javax.ws.rs/javax.ws.rs-api   
+    // Compile against, but don't include Java EE components in the final build 
     compileOnly ("javax.ws.rs:javax.ws.rs-api:2.0")
-    compileOnly ("javax.servlet:javax.servlet-api:4.0.1")    
+    compileOnly ("javax.servlet:javax.servlet-api:3.1.0")    
     //JAXB required if compiling with Java 11 or later
     compileOnly ("javax.xml.bind:jaxb-api:2.3.1")
 
     // Add the files from the war task as CICS bundle parts
     cicsBundlePart files(war)
 
-    // add dependenices from IBM Record Generator    
-    compile fileTree("lib")
-}
+    // Add generated IRG JAR as dependency to be packaged with app
+    implementation  files("${projectDir}/lib/com.ibm.cicsdev.restappext.generated.jar")
+}    
 
-
-// CICS bundle build, CICS bundle build, specify defaultJVMServer value to match CICS JVMSERVER name
+// CICS bundle build, specify defaultJVMServer value to match CICS JVMSERVER name
 cicsBundle {
     build {
         defaultJVMServer = jvmserver
