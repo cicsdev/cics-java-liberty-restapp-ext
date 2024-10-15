@@ -13,6 +13,7 @@ version = '0.1.0'
 sourceCompatibility = '1.8'
 
 apply plugin: 'war'
+apply plugin: 'java-library'
 
 
 war {    
@@ -33,8 +34,10 @@ eclipse
 repositories 
 {
     mavenCentral()
+     flatDir {
+        dirs 'lib/com/ibm/cicsdev/cics-java-liberty-restapp-ext-generated/1.0'
+    }
 }
-
 
 
 dependencies 
@@ -42,7 +45,7 @@ dependencies
     // CICS TS V5.5 Maven BOM (as of 19th May 2020)
     compileOnly enforcedPlatform("com.ibm.cics:com.ibm.cics.ts.bom:5.5-20200519131930-PH25409")
 
-    // Don't include JCICS in the final build (no need for version because we have BOM)
+    // Compile against but don't include JCICS in the final build (no need for version because we have BOM)
     compileOnly("com.ibm.cics:com.ibm.cics.server") 
     compileOnly("com.ibm.cics:com.ibm.cics.server.invocation.annotations")
     annotationProcessor("com.ibm.cics:com.ibm.cics.server.invocation:6.1")
@@ -57,7 +60,10 @@ dependencies
     cicsBundlePart files(war)
 
     // Add generated IRG JAR as dependency to be packaged with app
-    implementation  files("${projectDir}/lib/com.ibm.cicsdev.restappext.generated.jar")
+    //implementation files("${projectDir}/lib/com/ibm/cicsdev/cics-java-liberty-restapp-ext-generated/1.0/com.ibm.cicsdev.restappext.generated.1.0.jar")
+    implementation group: 'com.ibm.cicsdev', name: 'cics-java-liberty-restapp-ext-generated', version: '1.0'
+    
+
 }    
 
 // CICS bundle build, specify defaultJVMServer value to match CICS JVMSERVER name
