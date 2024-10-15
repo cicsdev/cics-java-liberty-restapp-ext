@@ -19,7 +19,7 @@
 		<repository>
 		  <id>cics-java-liberty-restapp-ext</id>
 		  <name>Project libraries</name>
-		  <url>file://${project.basedir}/lib</url>
+		  <url>file://${project.basedir}/local-repo</url>
 		</repository>
 	  </repositories>
 
