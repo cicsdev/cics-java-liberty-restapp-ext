@@ -40,7 +40,7 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.12.1</version>
 				<configuration>
-					<!-- Enable the CICS Annotation Processor -->
+					<!-- Enable the CICS Annotation Processor-->
 					<annotationProcessorPaths>
 						<annotationProcessorPath>
 							<groupId>com.ibm.cics</groupId>
@@ -127,7 +127,7 @@
 			<scope>provided</scope> 	    
 		</dependency> 
 
-		<!--IRG Generated record -->	
+		<!--IRG Generated JAR in local repo -->	
 		<dependency>
 			<groupId>com.ibm.cicsdev</groupId>
 			<artifactId>cics-java-liberty-restapp-ext-generated</artifactId>
