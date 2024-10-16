@@ -7,7 +7,8 @@ plugins
     id 'com.ibm.cics.bundle' version '1.0.6'
 }
 
-group = 'com.ibm.cicsdev.restapp.ext'
+group = 'com.ibm.cicsdev.restapp-ext'
+archivesBaseName='cics-java-liberty-restapp-ext'
 version = '0.1.0'
 
 java
