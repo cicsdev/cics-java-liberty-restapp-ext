@@ -30,7 +30,7 @@ Run the following in a local command prompt:
 
 This creates a WAR file inside the `build/libs` directory and a CICS bundle ZIP file inside the `build/distributions` directory.
 
-If using the CICS bundle ZIP, the default CICS JVM server name `DFHWLP`  should be modified in the `jvmserver` property in the gradle build  [file](build.gradle) to match the required CICS JVMSERVER resource name, or alternatively can be set on the command line as follows.
+If using the CICS bundle ZIP, the default CICS JVM server name `DFHWLP` should be modified using the `jvmserver` property in the gradle build [file](build.gradle) to match the required CICS JVMSERVER resource name, or alternatively can be set on the command line as follows.
 
 
 `gradle clean build -Pjvmserver=MYJVM`
@@ -38,9 +38,9 @@ If using the CICS bundle ZIP, the default CICS JVM server name `DFHWLP`  should 
 
 #### Maven (command line)
 
-First install the generated JAR file into the local Maven repo by running the following in a local command prompt
+First install the generated JAR file into the local Maven repository by running the following Maven command in a local command prompt
 
-` mvn org.apache.maven.plugins:maven-install-plugin:2.5.2:install-file -Dfile=lib/cics-java-liberty-restapp-ext-generated.jar     -DgroupId=com.ibm.cicsdev -DartifactId=cics-java-liberty-restapp-ext-generated -Dversion=1.0 -Dpackaging=jar -DlocalRepositoryPath=local-repo`
+`mvn org.apache.maven.plugins:maven-install-plugin:2.5.2:install-file -Dfile=lib/cics-java-liberty-restapp-ext-generated.jar     -DgroupId=com.ibm.cicsdev -DartifactId=cics-java-liberty-restapp-ext-generated -Dversion=1.0 -Dpackaging=jar -DlocalRepositoryPath=local-repo -DcreateChecksum=true`
 
 Next run the following in a local command prompt which will create a WAR file.
 
