@@ -7,8 +7,8 @@ plugins
     id 'com.ibm.cics.bundle' version '1.0.6'
 }
 
-group = 'com.ibm.cicsdev.restapp-ext'
-archivesBaseName='cics-java-liberty-restapp-ext'
+group = 'com.ibm.cicsdev.restappext'
+archivesBaseName='cics-java-liberty-restappext'
 version = '0.1.0'
 
 java
@@ -52,7 +52,7 @@ dependencies
     compileOnly ("javax.xml.bind:jaxb-api:2.3.1")
 
     // Add generated IRG JAR as dependency to be packaged with app
-    implementation files('lib/cics-java-liberty-restapp-ext-generated.jar')
+    implementation files('lib/cics-java-liberty-restappext-generated.jar')
 
     // Add the files from the war task as CICS bundle parts
     cicsBundlePart files(war)
