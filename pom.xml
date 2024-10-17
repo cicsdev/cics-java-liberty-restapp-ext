@@ -133,7 +133,7 @@
 		<!--IRG Generated JAR in local repo -->	
 		<dependency>
 			<groupId>com.ibm.cicsdev</groupId>
-			<artifactId>cics-java-liberty-restapp-ext-generated</artifactId>
+			<artifactId>cics-java-liberty-restappext-generated</artifactId>
 			<version>1.0</version>
 		</dependency>	
 	
