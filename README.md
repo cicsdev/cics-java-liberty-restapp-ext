@@ -1,4 +1,4 @@
-cics-java-liberty-restapp-ext
+cics-java-liberty-restappext
 =============================
 
 This repository provides sample materials for use with the IBM Redbooks video course
