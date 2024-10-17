@@ -3,10 +3,7 @@ Running the Link to Liberty examples
 
 The Link to Liberty samples are provided as COBOL programs with associated Java classes, which demonstrate `EXEC CICS LINK` to
 a Java method which has the `@CICSProgram` annotation. Note that the ability to link to a program defined as a POJO in Liberty
-is available when using:
-
-* CICS TS V5.3 with [APAR PI63005](http://www-01.ibm.com/support/docview.wss?uid=swg1PI63005)
-* CICS TS V5.4
+is available when using CICS TS V5.4 or later.
 
 Annotations must be enabled in the development environment, and the `cicsts:link-1.0` feature added to `server.xml` for the
 linkable programs to be made available when the application is deployed.
