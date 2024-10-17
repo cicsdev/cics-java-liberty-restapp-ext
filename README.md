@@ -1,4 +1,4 @@
-cics-java-liberty-restapp-ext
+cics-java-liberty-restappext
 =============================
 
 This repository provides sample materials for use with the IBM Redbooks video course
@@ -21,6 +21,7 @@ Full details on the contents of this repository can be found on the [Source code
 * CICS TS V5.4 or later
 * Java SE 1.8 or later on the workstation
 * Eclipse with the IBM CICS SDK for Java EE, Jakarta EE and Liberty, or any IDE that supports usage of the Maven Central artifact [com.ibm.cics:com.ibm.cics.server.](https://search.maven.org/artifact/com.ibm.cics/com.ibm.cics.server)
+* Maven or Gradle build tools (optional)
 
 ## Getting started
 
@@ -32,3 +33,4 @@ See the dedicated pages for executing the [JAX-RS](RunningJAXRS.md) and [Link to
 
 ## License
 This project is licensed under [Apache License Version 2.0](LICENSE).
+

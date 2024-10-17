@@ -1,13 +1,6 @@
 Getting started
 ===============
 
-## Pre-requisites
-
-* CICS TS V5.1 or later, due to the usage of the `getString()` methods.
-* Java SE 1.7 or later on the z/OS system
-* Java SE 1.7 or later on the workstation
-* Eclipse with WebSphere Developer Tools and CICS Explorer SDK V5.3.0.8 or later installed
-
 ## Configuration
 
 The sample Java classes are designed to be added to a dynamic web project and deployed into a Liberty JVM server as a WAR,
@@ -22,6 +15,45 @@ The VSAM examples use the sample file `SMPLXMPL`. For a sample CICS FILE definit
 1. Add the `com.ibm.cicsdev.restappext.generated.jar` file to the project build path.
 1. Ensure the web project is targeted to compile at a level that is compatible with the Java level being used on CICS. This can be achieved by editing the Java Project Facet in the project properties.
 1. [Optional] Create a CICS bundle project called `com.ibm.cicsdev.restappext.cicsbundle` and add a dynamic web project include for the project created in step 1.
+
+
+
+### Building the Example
+
+The sample can be built using the supplied Gradle or Maven build files to produce a WAR file and optionally a CICS Bundle archive.
+
+#### Gradle (command line)
+
+Run the following in a local command prompt:
+
+`gradle clean build`
+
+This creates a WAR file inside the `build/libs` directory and a CICS bundle ZIP file inside the `build/distributions` directory.
+
+If using the CICS bundle ZIP, the default CICS JVM server name `DFHWLP` should be modified using the `jvmserver` property in the gradle build [file](build.gradle) to match the required CICS JVMSERVER resource name, or alternatively can be set on the command line as follows.
+
+
+`gradle clean build -Pjvmserver=MYJVM`
+
+
+#### Maven (command line)
+
+First install the generated JAR file into the local Maven repository by running the following Maven command in a local command prompt
+
+`mvn org.apache.maven.plugins:maven-install-plugin:3.1.3:install-file -Dfile=lib/cics-java-liberty-restappext-generated.jar     -DgroupId=com.ibm.cicsdev -DartifactId=cics-java-liberty-restappext-generated -Dversion=1.0 -Dpackaging=jar -DlocalRepositoryPath=local-repo`
+
+Next run the following in a local command prompt which will create a WAR file.
+
+`mvn clean verify`
+
+This creates a WAR file in the `target` directory. 
+
+If building a CICS bundle ZIP the CICS bundle plugin bundle-war goal is driven using the maven verify phase. The CICS JVM server name should be modified in the <jvmserver> property in the [`pom.xml`](pom.xml) to match the required CICS JVMSERVER resource name, or alternatively can be set on the command line as follows. 
+
+`mvn clean verify -Djvmserver=MYJVM`
+
+
+
 
 ### To start a JVM server in CICS:
 1. Enable Java support in the CICS region by adding the `SDFJAUTH` library to the STEPLIB concatenation and setting `USSHOME` and the `JVMPROFILEDIR` SIT parameters.

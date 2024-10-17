@@ -1,0 +1,6 @@
+/.gradle/
+/target/
+/build/
+/bin/
+/local-repo/
+/.idea/

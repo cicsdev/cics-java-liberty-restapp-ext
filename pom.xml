@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<!-- Application properties -->
+	<groupId>com.ibm.cicsdev</groupId>
+	<artifactId>cics-java-liberty-restapp-ext</artifactId>
+	<name>cics-java-liberty-restapp-ext</name>
+	<version>0.1.0</version>
+	<description>Sample JAX-RS RESTful web application for Liberty that links to a CICS® COBOL program </description>	
+
+	<!-- Package as an executable war (default is jar) -->
+	<packaging>war</packaging>
+
+	<repositories>
+		<repository>
+		  <id>cics-java-liberty-restapp-ext</id>
+		  <name>Project libraries</name>
+		  <url>file://${project.basedir}/local-repo</url>
+		  <releases>
+			<checksumPolicy>ignore</checksumPolicy>
+		</releases>
+		</repository>
+	  </repositories>
+
+	<build>
+		<plugins>
+			<!-- WAR plugin build, set war archive name for consistency -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>3.4.0</version>
+				<configuration>
+					<failOnMissingWebXml>false</failOnMissingWebXml>										
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.12.1</version>
+				<configuration>
+					<!-- Enable the CICS Annotation Processor-->
+					<annotationProcessorPaths>
+						<annotationProcessorPath>
+							<groupId>com.ibm.cics</groupId>
+							<artifactId>com.ibm.cics.server.invocation</artifactId>
+							<version>6.1</version>
+						</annotationProcessorPath>
+					</annotationProcessorPaths>
+				</configuration>
+			  </plugin>
+
+			<plugin>
+				<!-- CICS bundle build, specify <jvmserver> value to match CICS JVMSERVER name -->
+				<groupId>com.ibm.cics</groupId>
+				<artifactId>cics-bundle-maven-plugin</artifactId>
+				<version>1.0.6</version>
+				<executions>
+				  <execution>
+					<goals>
+					  <goal>bundle-war</goal>
+					</goals>								
+					<configuration>
+					  <jvmserver>${jvmserver}</jvmserver>
+					</configuration>
+				  </execution>
+				</executions>
+			  </plugin>
+
+		</plugins>
+	</build>
+
+	<properties>
+		<java.version>1.8</java.version>	
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+		<jvmserver>DFHWLP</jvmserver>
+	  </properties>
+
+	<!-- CICS TS V5.5 BOM (as of May 2020) -->
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.ibm.cics</groupId>
+				<artifactId>com.ibm.cics.ts.bom</artifactId>
+				<version>5.5-20200519131930-PH25409</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<!-- Compile against, but don't include JCICS in the final build (version and scope are from BOM) -->
+		<dependency>
+			<groupId>com.ibm.cics</groupId>
+			<artifactId>com.ibm.cics.server</artifactId>
+		</dependency>
+
+		<!-- CICS Annotations  -->
+		<dependency>
+			<groupId>com.ibm.cics</groupId>
+			<artifactId>com.ibm.cics.server.invocation.annotations</artifactId>
+		</dependency>
+
+		<!-- Compile against, but don't include Java EE components in the final build  -->	
+		<dependency>
+			<groupId>javax.ws.rs</groupId>
+			<artifactId>javax.ws.rs-api</artifactId>
+			<version>2.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.1.0</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!--JAXB required if compiling with Java 11 or later -->	
+		<dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+			<version>2.3.1</version>
+			<scope>provided</scope> 	    
+		</dependency> 
+
+		<!--IRG Generated JAR in local repo -->	
+		<dependency>
+			<groupId>com.ibm.cicsdev</groupId>
+			<artifactId>cics-java-liberty-restappext-generated</artifactId>
+			<version>1.0</version>
+		</dependency>	
+	
+	</dependencies>
+
+</project>
