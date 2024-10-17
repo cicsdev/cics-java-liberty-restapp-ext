@@ -40,7 +40,7 @@ If using the CICS bundle ZIP, the default CICS JVM server name `DFHWLP` should b
 
 First install the generated JAR file into the local Maven repository by running the following Maven command in a local command prompt
 
-`mvn org.apache.maven.plugins:maven-install-plugin:3.1.3:install-file -Dfile=lib/cics-java-liberty-restapp-ext-generated.jar     -DgroupId=com.ibm.cicsdev -DartifactId=cics-java-liberty-restapp-ext-generated -Dversion=1.0 -Dpackaging=jar -DlocalRepositoryPath=local-repo`
+`mvn org.apache.maven.plugins:maven-install-plugin:3.1.3:install-file -Dfile=lib/cics-java-liberty-restappext-generated.jar     -DgroupId=com.ibm.cicsdev -DartifactId=cics-java-liberty-restappext-generated -Dversion=1.0 -Dpackaging=jar -DlocalRepositoryPath=local-repo`
 
 Next run the following in a local command prompt which will create a WAR file.
 
